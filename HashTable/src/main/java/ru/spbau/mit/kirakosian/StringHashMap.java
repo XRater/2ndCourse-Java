@@ -1,12 +1,14 @@
 package ru.spbau.mit.kirakosian;
 
-import java.security.Key;
 import java.util.function.Function;
 
+/**
+ * Basic hashmap implementation. This structure supports add remove and get operations.
+ * Every operation takes constant time. It is also possible to provide hash-function by yourself.
+ */
 public class StringHashMap {
 
     private static final int INITIAL_SIZE = 1000;
-    private static final int MAX_LIST_SIZE = 10;
 
     private int size;
     private Function<String, Integer> hashFunction = String::hashCode;
@@ -19,6 +21,12 @@ public class StringHashMap {
     StringHashMap() {}
 
 
+    /**
+     * Constructs hashmap with the given hash function. Hash function must take String as argument
+     * and return any integer value. Also value of hash function must be same for equal strings.
+     * @param f
+     * hash function
+     */
     StringHashMap(Function<String, Integer> f) {
         hashFunction = f;
     }
@@ -33,6 +41,15 @@ public class StringHashMap {
      */
     public boolean isEmpty() {
         return size == 0;
+    }
+
+
+    /**
+     * Clears the table.
+     */
+    public void clear() {
+        data = new KeyValueStringList[data.length];
+        size = 0;
     }
 
     /**
@@ -138,12 +155,22 @@ public class StringHashMap {
 
     private void increaseSize() {
         size++;
-        if (size > MAX_LIST_SIZE)
-            rebuild();
+        if (size > data.length)
+            rebuild(size * 2);
     }
 
-    private void rebuild() {
+    private void rebuild(int sz) {
         KeyValueStringList[] oldData = data;
-        data = new KeyValueStringList[size * 2];
+        data = new KeyValueStringList[sz];
+        size = 0;
+
+        for (KeyValueStringList list : oldData) {
+            if (list == null)
+                continue;
+            while (!list.isEmpty()) {
+                put(list.frontKey(), list.frontValue());
+                list.remove(list.frontKey());
+            }
+        }
     }
 }

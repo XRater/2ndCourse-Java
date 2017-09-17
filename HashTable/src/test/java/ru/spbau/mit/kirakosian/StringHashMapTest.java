@@ -119,4 +119,30 @@ public class StringHashMapTest {
             assertEquals(map.remove("a"), null);
         }
     }
+
+    @Test
+    public void clear() {
+        for (StringHashMap map : maps) {
+            map.clear();
+            assertEquals(map.size(), 0);
+            assertEquals(map.isEmpty(), true);
+
+            map.put("one", "two");
+            map.put("three", "3");
+            map.clear();
+            assertEquals(map.size(), 0);
+            assertEquals(map.get("one"), null);
+            assertEquals(map.contains("three"), false);
+        }
+    }
+
+    @Test
+    public void testRebuild() {
+        for (StringHashMap map : maps) {
+            for (int i = 0; i < 10000; i++) {
+                map.put(String.valueOf(i), String.valueOf(i));
+            }
+            assertEquals(map.size(), 10000);
+        }
+    }
 }

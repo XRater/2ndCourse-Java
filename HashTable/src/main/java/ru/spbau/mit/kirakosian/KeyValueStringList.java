@@ -8,10 +8,9 @@ package ru.spbau.mit.kirakosian;
  */
 public class
 KeyValueStringList {
-
     private Node head = new Node();
-    private int size;
 
+    private int size;
 
     /**
      * @return size of the list
@@ -35,6 +34,24 @@ KeyValueStringList {
         size = 0;
         head.next = head;
         head.prev = head;
+    }
+
+    /**
+     * Returns first key of the front element of the list
+     * @return
+     * front key value, null if list is empty
+     */
+    public String frontKey() {
+        return head.next.key;
+    }
+
+    /**
+     * Returns value of the front element of the list
+     * @return
+     * front value value, null if list is empty
+     */
+    public String frontValue() {
+        return head.next.value;
     }
 
     /**
@@ -186,6 +203,7 @@ KeyValueStringList {
         sb.append('}');
         return sb.toString();
     }
+
 
     private static class Node {
         private Node next;

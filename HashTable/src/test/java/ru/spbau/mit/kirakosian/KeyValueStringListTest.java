@@ -158,7 +158,7 @@ public class KeyValueStringListTest {
     }
 
     @Test
-    public void clear() {
+    public void testClear() {
         KeyValueStringList list = new KeyValueStringList();
         list.add("one", "one");
         list.add(null, "two");
@@ -167,5 +167,27 @@ public class KeyValueStringListTest {
 
         assertEquals(list.isEmpty(), true);
         assertEquals(list.size(), 0);
+    }
+
+    @Test
+    public void testFront() {
+        KeyValueStringList list = new KeyValueStringList();
+
+        assertEquals(list.frontKey(), null);
+        assertEquals(list.frontValue(), null);
+
+        list.add("key1", "value1");
+        list.add("key1", null);
+        list.add("key2", "value3");
+        assertEquals(list.frontKey(), "key1");
+        assertEquals(list.frontValue(), "value1");
+
+        list.remove(list.frontKey());
+        assertEquals(list.frontKey(), "key1");
+        assertEquals(list.frontValue(), null);
+
+        list.clear();
+        assertEquals(list.frontKey(), null);
+        assertEquals(list.frontValue(), null);
     }
 }
