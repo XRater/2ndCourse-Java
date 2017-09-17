@@ -82,6 +82,82 @@ public class KeyValueStringListTest {
     }
 
     @Test
+    public void testGet() {
+        KeyValueStringList list = new KeyValueStringList();
+        assertEquals(list.get(null), null);
+        assertEquals(list.get(""), null);
+        assertEquals(list.get("hello"), null);
+
+        list.add(null, "one");
+        list.add("hello", "two");
+        list.add("hello", "three");
+        list.add("hello2", "four");
+        assertEquals(list.get(null), null);
+        assertEquals(list.get("hello"), "two");
+        assertEquals(list.get("hello2"), "four");
+        assertEquals(list.get("one"), null);
+
+        list.remove("hello");
+        list.remove("hello2");
+        assertEquals(list.get("hello"), "three");
+        assertEquals(list.get("hello2"), null);
+    }
+
+    @Test
+    public void testReplace() {
+        KeyValueStringList list = new KeyValueStringList();
+        assertEquals(list.replace(null, "one"), null);
+        assertEquals(list.isEmpty(), true);
+
+        assertEquals(list.replace("hello", "two"), null);
+        assertEquals(list.size(), 1);
+        assertEquals(list.toString(), "{hello: two}");
+
+        assertEquals(list.replace("hello", "one"), "two");
+        assertEquals(list.size(), 1);
+        assertEquals(list.toString(), "{hello: one}");
+
+        list.add("hello", "three");
+        assertEquals(list.size(), 2);
+        assertEquals(list.toString(), "{hello: one, hello: three}");
+
+        assertEquals(list.replace(null, "four"), null);
+        assertEquals(list.replace("hello", "five"), "one");
+        assertEquals(list.toString(), "{hello: five, hello: three}");
+
+        assertEquals(list.replace("hello2", "six"), null);
+        assertEquals(list.toString(), "{hello: five, hello: three, hello2: six}");
+    }
+
+    @Test
+    public void testContains() {
+        KeyValueStringList list = new KeyValueStringList();
+        assertEquals(list.contains(null), false);
+        assertEquals(list.contains(""), false);
+        assertEquals(list.contains("one"), false);
+
+        list.add("key1", "one");
+        list.add("key2", "one");
+        list.add("key1", "three");
+        assertEquals(list.contains(null), false);
+        assertEquals(list.contains("key1"), true);
+        assertEquals(list.contains("key2"), true);
+
+        list.replace("key1", null);
+        list.remove("key1");
+        assertEquals(list.contains("key1"), true);
+        assertEquals(list.contains("key2"), true);
+
+        list.remove("key1");
+        assertEquals(list.contains("key2"), true);
+        assertEquals(list.contains("key1"), false);
+
+        list.clear();
+        assertEquals(list.contains("key2"), false);
+        assertEquals(list.contains("key1"), false);
+    }
+
+    @Test
     public void clear() {
         KeyValueStringList list = new KeyValueStringList();
         list.add("one", "one");
