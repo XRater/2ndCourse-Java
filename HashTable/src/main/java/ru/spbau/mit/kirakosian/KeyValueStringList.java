@@ -37,7 +37,7 @@ KeyValueStringList {
     }
 
     /**
-     * Returns first key of the front element of the list
+     * Returns the key of the front element of the list
      * @return
      * front key value, null if list is empty
      */
@@ -48,7 +48,7 @@ KeyValueStringList {
     /**
      * Returns value of the front element of the list
      * @return
-     * front value value, null if list is empty
+     * front value, null if list is empty
      */
     public String frontValue() {
         return head.next.value;
@@ -81,16 +81,16 @@ KeyValueStringList {
     /**
      * This method changes the value found by the given key.
      * If list contains more then one element with the given key,
-     * the method replaces the value of first found pair.
+     * the method replaces the value of first found element.
      * If list does not contain the given key,
      * this method adds new pair to the end of the list
      * @param key
      * key to find
      * @param value
      * value to set
-     * @return replaced value and null if key was not found
+     * @return replaced value, null if key was not found
      */
-    public String replace(String key, String value) {
+    public String put(String key, String value) {
         if (key == null)
             return null;
         Node curr = head;
@@ -140,11 +140,11 @@ KeyValueStringList {
      * This method finds value by the given key.
      * If list contains more then one element with the given key,
      * the method returns the first found value.
-     * Always returns null if the key equals to null.
      * @param key
      * key to find
      * @return
      * value of found element and null if the key was not found
+     * returns false if the key equals to null
      */
     public String get(String key) {
         if (key == null)
