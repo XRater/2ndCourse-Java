@@ -3,8 +3,8 @@ package ru.spbau.mit.kirakosian;
 import java.util.function.Function;
 
 /**
- * Basic hashmap implementation. This structure supports add, remove and get operations.
- * Every operation takes constant time. It is also possible to provide custom hash function.
+ * Basic hashmap implementation. This structure supports add remove and get operations.
+ * Every operation takes constant time. It is also possible to provide hash-function by yourself.
  */
 public class StringHashMap {
 
@@ -16,14 +16,14 @@ public class StringHashMap {
 
     /**
      * Constructs default HashMap with default hash function (String.hashCode()).
-     * Initially creates 1000 cells.
+     * Initially creates 1000
      */
     StringHashMap() {}
 
 
     /**
      * Constructs hashmap with the given hash function. Hash function must take String as argument
-     * and return any integer value. Also value of hash function must be the same for two equal strings.
+     * and return any integer value. Also value of hash function must be same for equal strings.
      * @param f
      * hash function
      */
@@ -45,7 +45,7 @@ public class StringHashMap {
 
 
     /**
-     * Clears the hashmap.
+     * Clears the table.
      */
     public void clear() {
         data = new KeyValueStringList[data.length];
@@ -54,16 +54,16 @@ public class StringHashMap {
 
     /**
      * This method adds key and value pair into hashtable.
-     * Null key will be ignored.
+     * If the key is equal to null pair will not be added.
      * All keys in hashmap must be unique, therefore if
      * the key already was in hashtable its value will be replaced
-     * with the new one.
+     * with the new one
      * @param key
      * key to add
      * @param value
      * value to add
      * @return
-     * replaced value, and null if the key was a new one
+     * replaced value and null if the key was the new one
      */
     public String put(String key, String value) {
         if (key == null)
@@ -75,7 +75,7 @@ public class StringHashMap {
         }
 
         int oldSize = data[index].size();
-        String returnVal = data[index].put(key, value);
+        String returnVal = data[index].replace(key, value);
         if (oldSize != data[index].size())
             increaseSize();
 
@@ -88,7 +88,7 @@ public class StringHashMap {
      * @param key
      * key to find
      * @return
-     * value of found element, and null if an element was not found
+     * value of found element and null if element was not found
      */
     public String get(String key) {
         if (key == null)
@@ -104,6 +104,7 @@ public class StringHashMap {
 
     /**
      * This method checks if there is already a value stored with the given key in hashmap.
+     * null key is never stored.
      * @param key
      * key to find
      * @return
@@ -122,11 +123,11 @@ public class StringHashMap {
     }
 
     /**
-     * This method removes a pair with the given key from the hashmap.
+     * This method removes pair with the given key from the hashmap.
      * @param key
      * key to remove
      * @return
-     * value of removed pair, and null if the key was not found
+     * value of removed pair and null if the key was not found
      */
     public String remove(String key) {
         if (key == null)

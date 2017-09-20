@@ -104,16 +104,16 @@ public class KeyValueStringListTest {
     }
 
     @Test
-    public void testPut() {
+    public void testReplace() {
         KeyValueStringList list = new KeyValueStringList();
-        assertEquals(list.put(null, "one"), null);
+        assertEquals(list.replace(null, "one"), null);
         assertEquals(list.isEmpty(), true);
 
-        assertEquals(list.put("hello", "two"), null);
+        assertEquals(list.replace("hello", "two"), null);
         assertEquals(list.size(), 1);
         assertEquals(list.toString(), "{hello: two}");
 
-        assertEquals(list.put("hello", "one"), "two");
+        assertEquals(list.replace("hello", "one"), "two");
         assertEquals(list.size(), 1);
         assertEquals(list.toString(), "{hello: one}");
 
@@ -121,11 +121,11 @@ public class KeyValueStringListTest {
         assertEquals(list.size(), 2);
         assertEquals(list.toString(), "{hello: one, hello: three}");
 
-        assertEquals(list.put(null, "four"), null);
-        assertEquals(list.put("hello", "five"), "one");
+        assertEquals(list.replace(null, "four"), null);
+        assertEquals(list.replace("hello", "five"), "one");
         assertEquals(list.toString(), "{hello: five, hello: three}");
 
-        assertEquals(list.put("hello2", "six"), null);
+        assertEquals(list.replace("hello2", "six"), null);
         assertEquals(list.toString(), "{hello: five, hello: three, hello2: six}");
     }
 
@@ -143,7 +143,7 @@ public class KeyValueStringListTest {
         assertEquals(list.contains("key1"), true);
         assertEquals(list.contains("key2"), true);
 
-        list.put("key1", null);
+        list.replace("key1", null);
         list.remove("key1");
         assertEquals(list.contains("key1"), true);
         assertEquals(list.contains("key2"), true);

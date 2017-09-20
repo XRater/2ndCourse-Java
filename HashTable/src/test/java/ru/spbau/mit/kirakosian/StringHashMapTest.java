@@ -2,7 +2,9 @@ package ru.spbau.mit.kirakosian;
 
 import org.junit.Before;
 import org.junit.Test;
+import sun.security.provider.SHA;
 
+import java.util.Random;
 import java.util.function.Function;
 
 import static org.junit.Assert.*;
