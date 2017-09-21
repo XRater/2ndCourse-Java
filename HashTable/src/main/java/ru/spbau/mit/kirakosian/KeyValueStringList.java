@@ -1,4 +1,4 @@
-package ru.spbau.mit.kirakosian;
+package java.ru.spbau.mit.kirakosian;
 
 /**
  * Basic list implementation. Used in StringHashMap.
