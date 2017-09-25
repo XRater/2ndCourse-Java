@@ -5,15 +5,16 @@ import org.junit.jupiter.api.Test;
 import static org.junit.Assert.*;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+@SuppressWarnings("WeakerAccess")
 public class KeyValueStringListTest {
 
     @Test
-    public void testCreate() throws Exception {
+    public void testCreate() {
         KeyValueStringList list = new KeyValueStringList();
     }
 
     @Test
-    public void testAddSize() throws Exception {
+    public void testAddSize() {
         KeyValueStringList list = new KeyValueStringList();
 
         assertEquals(0, list.size());
@@ -35,26 +36,26 @@ public class KeyValueStringListTest {
     public void testToString() {
         KeyValueStringList list = new KeyValueStringList();
 
-        assertEquals(list.toString(), "{}");
+        assertEquals("{}", list.toString());
 
         list.add("hello", "one");
-        assertEquals(list.toString(), "{hello: one}");
+        assertEquals("{hello: one}", list.toString());
 
         list.add("hello", "two");
-        assertEquals(list.toString(), "{hello: one, hello: two}");
+        assertEquals("{hello: one, hello: two}", list.toString());
 
         list.add("", "");
-        assertEquals(list.toString(), "{hello: one, hello: two, : }");
+        assertEquals("{hello: one, hello: two, : }", list.toString());
 
         list.add("null", "three");
-        assertEquals(list.toString(), "{hello: one, hello: two, : , null: three}");
+        assertEquals("{hello: one, hello: two, : , null: three}", list.toString());
     }
 
     @Test
     public void testRemove() {
         KeyValueStringList list = new KeyValueStringList();
-        assertEquals(list.remove("one"), null);
-        assertEquals(list.remove(null), null);
+        assertNull(list.remove("one"));
+        assertNull(list.remove(null));
 
         assertThrows(IllegalArgumentException.class, () -> list.add(null, "zero"));
         list.add("Hello", "one");
@@ -62,100 +63,100 @@ public class KeyValueStringListTest {
         list.add("", null);
         list.add("12", "three");
 
-        assertEquals(list.isEmpty(), false);
-        assertEquals(list.remove(null), null);
-        assertEquals(list.remove(""), null);
-        assertEquals(list.remove(""), null);
-        assertEquals(list.size(), 3);
+        assertFalse(list.isEmpty());
+        assertNull(list.remove(null));
+        assertNull(list.remove(""));
+        assertNull(list.remove(""));
+        assertEquals(3, list.size());
 
-        assertEquals(list.remove("Hello"), "one");
-        assertEquals(list.size(), 2);
+        assertEquals("one", list.remove("Hello"));
+        assertEquals(2, list.size());
 
-        assertEquals(list.remove("one"), null);
-        assertEquals(list.size(), 2);
+        assertNull(list.remove("one"));
+        assertEquals(2, list.size());
 
-        assertEquals(list.remove("12"), "three");
-        assertEquals(list.size(), 1);
+        assertEquals("three", list.remove("12"));
+        assertEquals(1, list.size());
 
-        assertEquals(list.remove("Hello"), "two");
-        assertEquals(list.size(), 0);
-        assertEquals(list.isEmpty(), true);
+        assertEquals("two", list.remove("Hello"));
+        assertEquals(0, list.size());
+        assertTrue(list.isEmpty());
     }
 
     @Test
     public void testGet() {
         KeyValueStringList list = new KeyValueStringList();
-        assertEquals(list.get(null), null);
-        assertEquals(list.get(""), null);
-        assertEquals(list.get("hello"), null);
+        assertNull(list.get(null));
+        assertNull(list.get(""));
+        assertNull(list.get("hello"));
 
         assertThrows(IllegalArgumentException.class, () -> list.add(null, "one"));
         list.add("hello", "two");
         list.add("hello", "three");
         list.add("hello2", "four");
-        assertEquals(list.get(null), null);
-        assertEquals(list.get("hello"), "two");
-        assertEquals(list.get("hello2"), "four");
-        assertEquals(list.get("one"), null);
+        assertNull(list.get(null));
+        assertEquals("two", list.get("hello"));
+        assertEquals("four", list.get("hello2"));
+        assertNull(list.get("one"));
 
         list.remove("hello");
         list.remove("hello2");
-        assertEquals(list.get("hello"), "three");
-        assertEquals(list.get("hello2"), null);
+        assertEquals("three", list.get("hello"));
+        assertNull(list.get("hello2"));
     }
 
     @Test
     public void testReplace() {
         KeyValueStringList list = new KeyValueStringList();
-        assertEquals(list.replace(null, "one"), null);
-        assertEquals(list.isEmpty(), true);
+        assertNull(list.replace(null, "one"));
+        assertTrue(list.isEmpty());
 
-        assertEquals(list.replace("hello", "two"), null);
-        assertEquals(list.size(), 1);
-        assertEquals(list.toString(), "{hello: two}");
+        assertNull(list.replace("hello", "two"));
+        assertEquals(1, list.size());
+        assertEquals("{hello: two}", list.toString());
 
-        assertEquals(list.replace("hello", "one"), "two");
-        assertEquals(list.size(), 1);
-        assertEquals(list.toString(), "{hello: one}");
+        assertEquals("two", list.replace("hello", "one"));
+        assertEquals(1, list.size());
+        assertEquals("{hello: one}", list.toString());
 
         list.add("hello", "three");
-        assertEquals(list.size(), 2);
-        assertEquals(list.toString(), "{hello: one, hello: three}");
+        assertEquals(2, list.size());
+        assertEquals("{hello: one, hello: three}", list.toString());
 
-        assertEquals(list.replace(null, "four"), null);
-        assertEquals(list.replace("hello", "five"), "one");
-        assertEquals(list.toString(), "{hello: five, hello: three}");
+        assertNull(list.replace(null, "four"));
+        assertEquals("one", list.replace("hello", "five"));
+        assertEquals("{hello: five, hello: three}", list.toString());
 
-        assertEquals(list.replace("hello2", "six"), null);
-        assertEquals(list.toString(), "{hello: five, hello: three, hello2: six}");
+        assertNull(list.replace("hello2", "six"));
+        assertEquals("{hello: five, hello: three, hello2: six}", list.toString());
     }
 
     @Test
     public void testContains() {
         KeyValueStringList list = new KeyValueStringList();
-        assertEquals(list.contains(null), false);
+        assertFalse(list.contains(null));
         assertEquals(list.contains(""), false);
         assertEquals(list.contains("one"), false);
 
         list.add("key1", "one");
         list.add("key2", "one");
         list.add("key1", "three");
-        assertEquals(list.contains(null), false);
-        assertEquals(list.contains("key1"), true);
-        assertEquals(list.contains("key2"), true);
+        assertFalse(list.contains(null));
+        assertTrue(list.contains("key1"));
+        assertTrue(list.contains("key2"));
 
         list.replace("key1", null);
         list.remove("key1");
-        assertEquals(list.contains("key1"), true);
-        assertEquals(list.contains("key2"), true);
+        assertTrue(list.contains("key1"));
+        assertTrue(list.contains("key2"));
 
         list.remove("key1");
-        assertEquals(list.contains("key2"), true);
-        assertEquals(list.contains("key1"), false);
+        assertTrue(list.contains("key2"));
+        assertFalse(list.contains("key1"));
 
         list.clear();
-        assertEquals(list.contains("key2"), false);
-        assertEquals(list.contains("key1"), false);
+        assertFalse(list.contains("key2"));
+        assertFalse(list.contains("key1"));
     }
 
     @Test
@@ -166,29 +167,29 @@ public class KeyValueStringListTest {
         assertThrows(IllegalArgumentException.class, () -> list.add(null, null));
         list.clear();
 
-        assertEquals(list.isEmpty(), true);
-        assertEquals(list.size(), 0);
+        assertTrue(list.isEmpty());
+        assertEquals(0, list.size());
     }
 
     @Test
     public void testFront() {
         KeyValueStringList list = new KeyValueStringList();
 
-        assertEquals(list.frontKey(), null);
-        assertEquals(list.frontValue(), null);
+        assertNull(list.frontKey());
+        assertNull(list.frontValue());
 
         list.add("key1", "value1");
         list.add("key1", null);
         list.add("key2", "value3");
-        assertEquals(list.frontKey(), "key1");
-        assertEquals(list.frontValue(), "value1");
+        assertEquals("key1", list.frontKey());
+        assertEquals("value1", list.frontValue());
 
         list.remove(list.frontKey());
-        assertEquals(list.frontKey(), "key1");
-        assertEquals(list.frontValue(), null);
+        assertEquals("key1", list.frontKey());
+        assertNull(list.frontValue());
 
         list.clear();
-        assertEquals(list.frontKey(), null);
-        assertEquals(list.frontValue(), null);
+        assertNull(list.frontKey());
+        assertNull(list.frontValue());
     }
 }
