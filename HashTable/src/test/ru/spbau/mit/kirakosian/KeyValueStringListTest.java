@@ -16,19 +16,19 @@ public class KeyValueStringListTest {
     public void testAddSize() throws Exception {
         KeyValueStringList list = new KeyValueStringList();
 
-        assertEquals(list.size(), 0);
+        assertEquals(0, list.size());
 
         list.add("one", "hi");
-        assertEquals(list.size(), 1);
+        assertEquals(1, list.size());
 
         list.add("", null);
-        assertEquals(list.size(), 2);
+        assertEquals(2, list.size());
 
-        list.add(null, "three");
-        assertEquals(list.size(), 2);
+        assertThrows(IllegalArgumentException.class, () -> list.add(null, "three"));
+        assertEquals(2, list.size());
 
         list.add("", null);
-        assertEquals(list.size(), 3);
+        assertEquals(3, list.size());
     }
 
     @Test
@@ -56,7 +56,7 @@ public class KeyValueStringListTest {
         assertEquals(list.remove("one"), null);
         assertEquals(list.remove(null), null);
 
-        list.add(null, "zero");
+        assertThrows(IllegalArgumentException.class, () -> list.add(null, "zero"));
         list.add("Hello", "one");
         list.add("Hello", "two");
         list.add("", null);
@@ -89,7 +89,7 @@ public class KeyValueStringListTest {
         assertEquals(list.get(""), null);
         assertEquals(list.get("hello"), null);
 
-        list.add(null, "one");
+        assertThrows(IllegalArgumentException.class, () -> list.add(null, "one"));
         list.add("hello", "two");
         list.add("hello", "three");
         list.add("hello2", "four");
@@ -162,8 +162,8 @@ public class KeyValueStringListTest {
     public void testClear() {
         KeyValueStringList list = new KeyValueStringList();
         list.add("one", "one");
-        list.add(null, "two");
-        list.add(null, null);
+        assertThrows(IllegalArgumentException.class, () -> list.add(null, "two"));
+        assertThrows(IllegalArgumentException.class, () -> list.add(null, null));
         list.clear();
 
         assertEquals(list.isEmpty(), true);

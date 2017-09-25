@@ -63,7 +63,7 @@ public class KeyValueStringList {
      */
     public void add(String key, String value) {
         if (key == null)
-            return;
+            throw new IllegalArgumentException();
 
         Node newNode = new Node(key, value);
 
