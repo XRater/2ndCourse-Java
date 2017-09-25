@@ -7,6 +7,7 @@ import ru.spbau.mit.kirakosian.StringHashMap;
 import java.util.function.Function;
 
 import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class StringHashMapTest {
 
@@ -54,7 +55,7 @@ public class StringHashMapTest {
 
             assertEquals(map.put("key1", "one"), null);
             assertEquals(map.put("key2", "two"), null);
-            assertEquals(map.put(null, "three"), null);
+            assertThrows(IllegalArgumentException.class, () -> map.put(null, "three"));
             assertEquals(map.get(null), null);
 
             assertEquals(map.size(), 2);
@@ -74,7 +75,7 @@ public class StringHashMapTest {
             assertEquals(map.put("key3", null), "five");
             assertEquals(map.get("key3"), null);
 
-            assertEquals(map.put(null, "hello"), null);
+            assertThrows(IllegalArgumentException.class, () -> map.put(null, "hello"));
             assertEquals(map.put("key3", null), null);
             assertEquals(map.get(null), null);
             assertEquals(map.size(), 3);
@@ -88,7 +89,7 @@ public class StringHashMapTest {
             assertEquals(map.contains("key1"), false);
 
             map.put("key1", "value1");
-            map.put(null, null);
+            assertThrows(IllegalArgumentException.class, () -> map.put(null, null));
             assertEquals(map.contains(null), false);
             assertEquals(map.contains("key1"), true);
             assertEquals(map.contains("key2"), false);

@@ -57,7 +57,7 @@ public class StringHashMap {
 
     /**
      * This method adds key and value pair into hashtable.
-     * If the key is equal to null pair will not be added.
+     * If the key is equal to null throws IllegalArgumentException.
      * All keys in hashmap must be unique, therefore if
      * the key already was in hashtable its value will be replaced
      * with the new one
@@ -70,7 +70,7 @@ public class StringHashMap {
      */
     public String put(String key, String value) {
         if (key == null)
-            return null;
+            throw new IllegalArgumentException();
 
         int index = hash(key);
         if (data[index] == null) {

@@ -55,7 +55,7 @@ public class KeyValueStringList {
 
     /**
      * This method adds key and value pair to the end of the list.
-     * If key equals to null this method does nothing
+     * If key equals to null this method throws IllegalArgumentException
      * @param key
      * key to add
      * @param value
