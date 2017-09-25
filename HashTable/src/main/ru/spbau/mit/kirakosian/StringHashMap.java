@@ -1,4 +1,4 @@
-package java.ru.spbau.mit.kirakosian;
+package ru.spbau.mit.kirakosian;
 
 import java.util.function.Function;
 
@@ -31,6 +31,9 @@ public class StringHashMap {
         hashFunction = f;
     }
 
+    /**
+     * Returns size of the list.
+     */
     public int size() {
         return size;
     }
@@ -48,7 +51,7 @@ public class StringHashMap {
      * Clears the table.
      */
     public void clear() {
-        data = new KeyValueStringList[data.length];
+        data = new KeyValueStringList[INITIAL_SIZE];
         size = 0;
     }
 

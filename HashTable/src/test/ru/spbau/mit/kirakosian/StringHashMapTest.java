@@ -1,10 +1,9 @@
-package java.ru.spbau.mit.kirakosian;
+package ru.spbau.mit.kirakosian;
 
 import org.junit.Before;
 import org.junit.Test;
-import sun.security.provider.SHA;
+import ru.spbau.mit.kirakosian.StringHashMap;
 
-import java.util.Random;
 import java.util.function.Function;
 
 import static org.junit.Assert.*;

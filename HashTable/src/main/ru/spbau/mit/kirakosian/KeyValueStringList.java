@@ -1,4 +1,4 @@
-package java.ru.spbau.mit.kirakosian;
+package ru.spbau.mit.kirakosian;
 
 /**
  * Basic list implementation. Used in StringHashMap.
@@ -6,14 +6,13 @@ package java.ru.spbau.mit.kirakosian;
  * This list stores pairs of keys and values. The keys may not be unique.
  * Each key corresponds its own value.
  */
-public class
-KeyValueStringList {
+public class KeyValueStringList {
     private Node head = new Node();
 
     private int size;
 
     /**
-     * @return size of the list
+     * Returns size of the list
      */
     public int size() {
         return size;
