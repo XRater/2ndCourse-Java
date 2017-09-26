@@ -146,15 +146,8 @@ public class KeyValueStringList {
      * value of found element and null if the key was not found
      */
     public String get(String key) {
-        if (key == null)
-            return null;
-        Node curr = head;
-        while (curr.next != head) {
-            curr = curr.next;
-            if (curr.key.equals(key))
-                return curr.value;
-        }
-        return null;
+        Node node = find(key);
+        return node == null ? null : node.value;
     }
 
     /**
@@ -166,16 +159,7 @@ public class KeyValueStringList {
      * returns false if the key equals to null
      */
     public boolean contains(String key) {
-        if (key == null)
-            return false;
-
-        Node curr = head;
-        while (curr.next != head) {
-            curr = curr.next;
-            if (curr.key.equals(key))
-                return true;
-        }
-        return false;
+        return find(key) != null;
     }
 
     /**
@@ -203,8 +187,20 @@ public class KeyValueStringList {
         return sb.toString();
     }
 
+    private Node find(String key) {
+        if (key == null)
+            return null;
+        Node curr = head;
+        while (curr.next != head) {
+            curr = curr.next;
+            if (curr.key.equals(key))
+                return curr;
+        }
+        return null;
+    }
 
     private static class Node {
+
         private Node next;
         private Node prev;
 
