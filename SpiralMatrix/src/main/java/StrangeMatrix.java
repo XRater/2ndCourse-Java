@@ -1,16 +1,19 @@
 import java.util.Arrays;
 import java.util.Comparator;
 
-public class SpiralMatrix {
+public class StrangeMatrix {
 
     public static void spiralPrint(int[][] data) {
+        if (data == null)
+            throw new IllegalArgumentException();
+
         int n = data.length;
 
         if (n % 2 != 1) {
             throw new IllegalArgumentException();
         }
 
-        if (ColumnsHasSameSizes(data, n)) {
+        if (!isMatrixRectangular(data, n)) {
             throw new IllegalArgumentException();
         }
     }
@@ -22,18 +25,28 @@ public class SpiralMatrix {
      * <p>
      * The array may have 0 columns or 0 rows.
      * All columns must have the same size. If not, IllegalArgumentException will be thrown.
+     * Also all arrays must be not null. If they are not, IllegalArgumentException will be thrown.
      * <p>
      * This method takes additional memory equals to the size of data, but it takes nm + sort(n)
      * time instead of m*sort(n)
      * @param data two-dimensional array to sort
      */
     public static void sortByColumns(int[][] data) {
-        int n = data.length;
-        if (n == 0)
-            return;
+        if (data == null) {
+            throw new IllegalArgumentException();
+        }
 
+        int n = data.length;
+        if (n == 0) {
+            return;
+        }
+
+        if (data[0] == null) {
+            throw new IllegalArgumentException();
+        }
         int m = data[0].length;
-        if (!ColumnsHasSameSizes(data, m)) {
+
+        if (!isMatrixRectangular(data, m)) {
             throw new IllegalArgumentException();
         }
 
@@ -49,15 +62,15 @@ public class SpiralMatrix {
     }
 
     /**
-     * Checks if passed array has rectangular form.
-     * More formal, checks that all columns has same sizes equals to n.
+     * Checks if passed array has rectangular form and all inner arrays are not equal to null.
+     * More formal, checks that all columns has same sizes equals to expectedSize.
      * @param data array to check
-     * @param n expected column size
-     * @return true if every column has equal to n size and false otherwise
+     * @param expectedSize expected column size
+     * @return true if every column has equal to expectedSize size and false otherwise
      */
-    private static boolean ColumnsHasSameSizes(int[][] data, int n) {
+    private static boolean isMatrixRectangular(int[][] data, int expectedSize) {
         for (int[] aData : data) {
-            if (aData.length != n) {
+            if (aData == null || aData.length != expectedSize) {
                 return false;
             }
         }
