@@ -1,16 +1,31 @@
 import java.util.Arrays;
 import java.util.Comparator;
 
+/**
+ * Class contains some statics method to work with rectangular two-dimensional arrays (matrix).
+ * It is not possible to create object of that class. All functions must be used in a static way.
+ */
 public class StrangeMatrix {
+
+    private StrangeMatrix() {
+
+    }
 
     /**
      * This method returns two-dimensional array in String form.
      * Elements will be added in a spiral sequence. Comma is used as delimiter.
      * For example
-     * <p> 9 2 3
-     * <p> 8 1 4
-     * <p> 7 6 5
-     * <p>
+     * <table>
+     * <tr>
+     * <td> 9 </td> <td> 2 </td> <td> 3 </td>
+     * </tr>
+     * <tr>
+     * <td> 8 </td> <td> 1 </td> <td> 4 </td>
+     * </tr>
+     * <tr>
+     * <td> 7 </td> <td> 6 </td> <td> 5 </td>
+     * </tr>
+     * </table
      * returns [1, 2, 3, 4, 5, 6, 7, 8, 9]
      * <p>
      * Array must be completed quad matrix N x N with odd N.
