@@ -39,7 +39,7 @@ public class StrangeMatrix {
         if (data == null)
             throw new IllegalArgumentException();
 
-        int n = data.length;
+        final int n = data.length;
 
         if (n % 2 != 1) {
             throw new IllegalArgumentException();
@@ -49,8 +49,8 @@ public class StrangeMatrix {
             throw new IllegalArgumentException();
         }
 
-        StringBuilder sb = new StringBuilder();
-        int center = n / 2;
+        final StringBuilder sb = new StringBuilder(); //That does not look well with final keyword
+        final int center = n / 2;
         sb.append(data[center][center]);
         for (int step = 1; step <= center; step++) {
             appendLine(data, sb, center - step, center - step + 1, center - step, center + step);
@@ -77,7 +77,7 @@ public class StrangeMatrix {
             throw new IllegalArgumentException();
         }
 
-        int n = data.length;
+        final int n = data.length;
         if (n == 0) {
             return;
         }
@@ -85,7 +85,7 @@ public class StrangeMatrix {
         if (data[0] == null) {
             throw new IllegalArgumentException();
         }
-        int m = data[0].length;
+        final int m = data[0].length;
 
         if (!isMatrixRectangular(data, m)) {
             throw new IllegalArgumentException();
@@ -94,7 +94,7 @@ public class StrangeMatrix {
         if (m == 0)
             return;
 
-        int[][] dataCopy = new int[m][n];
+        final int[][] dataCopy = new int[m][n];
         copyRotateTwoDimensionalArray(data, dataCopy, n, m);
 
         Arrays.sort(dataCopy, Comparator.comparingInt(ints -> ints[0]));
@@ -129,12 +129,12 @@ public class StrangeMatrix {
             throw new IllegalArgumentException();
 
         if (beginX == endX) {
-            int dy = sign(endY - beginY);
+            final int dy = sign(endY - beginY);
             for (int y = beginY; y != endY + dy; y += dy) {
                 sb.append(", ").append(data[beginX][y]);
             }
         } else {
-            int dx = sign(endX - beginX);
+            final int dx = sign(endX - beginX);
             for (int x = beginX; x != endX + dx; x += dx) {
                 sb.append(", ").append(data[x][beginY]);
             }
