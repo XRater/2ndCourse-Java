@@ -5,6 +5,9 @@ import java.util.Arrays;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+/**
+ * Class contains tests for StrangeMatrix class
+ */
 public class StrangeMatrixTest {
 
     @Test

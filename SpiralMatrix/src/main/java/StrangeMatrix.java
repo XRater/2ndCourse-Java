@@ -2,7 +2,7 @@ import java.util.Arrays;
 import java.util.Comparator;
 
 /**
- * Class contains some statics method to work with rectangular two-dimensional arrays (matrix).
+ * Class contains some static methods to work with rectangular two-dimensional arrays (matrix).
  * It is not possible to create object of that class. All functions must be used in a static way.
  */
 public class StrangeMatrix {
@@ -12,8 +12,9 @@ public class StrangeMatrix {
     }
 
     /**
-     * This method returns two-dimensional array in String form.
-     * Elements will be added in a spiral sequence. Comma is used as delimiter.
+     * This method returns two-dimensional array in a String form.
+     * Elements will be taken in a spiral sequence clock-wise.
+     * Comma is used as delimiter.
      * For example
      * <table>
      * <tr>
@@ -25,13 +26,14 @@ public class StrangeMatrix {
      * <tr>
      * <td> 7 </td> <td> 6 </td> <td> 5 </td>
      * </tr>
-     * </table
+     * </table>
+     *
      * returns [1, 2, 3, 4, 5, 6, 7, 8, 9]
      * <p>
-     * Array must be completed quad matrix N x N with odd N.
-     * All columns must have same odd sizes. If they do not, IllegalArgumentException will be thrown.
-     * @param data two-dimensional array to work with
-     * @return String representation of your array
+     * Array must be a completed square N x N matrix where N is odd.
+     * If it does not, IllegalArgumentException will be thrown.
+     * @param data two-dimensional array
+     * @return String representation of the array
      */
     public static String spiralPrint(int[][] data) {
         if (data == null)
@@ -51,24 +53,23 @@ public class StrangeMatrix {
         int center = n / 2;
         sb.append(data[center][center]);
         for (int step = 1; step <= center; step++) {
-            printLine(data, sb, center - step, center - step + 1, center - step, center + step);
-            printLine(data, sb, center - step + 1, center + step, center + step, center + step);
-            printLine(data, sb, center + step, center + step - 1, center + step, center - step);
-            printLine(data, sb, center + step - 1, center - step, center - step, center - step);
+            appendLine(data, sb, center - step, center - step + 1, center - step, center + step);
+            appendLine(data, sb, center - step + 1, center + step, center + step, center + step);
+            appendLine(data, sb, center + step, center + step - 1, center + step, center - step);
+            appendLine(data, sb, center + step - 1, center - step, center - step, center - step);
         }
         return sb.toString();
     }
 
     /**
-     * Sorts columns of given two-dimensional array by the first row.
+     * Sorts columns of the given two-dimensional array by the first element of each column.
      * Sort is guaranteed to be stable, columns with equal first elements will not be reordered.
      * <p>
      * The array may have 0 columns or 0 rows.
      * All columns must have the same size. If not, IllegalArgumentException will be thrown.
-     * Also all arrays must be not null. If they are not, IllegalArgumentException will be thrown.
+     * Also all arrays must not be null. If they are, IllegalArgumentException will be thrown.
      * <p>
-     * This method takes additional memory equals to the size of data, but it takes nm + sort(n)
-     * time instead of m*sort(n)
+     * This method takes additional memory that is equal to the size of the data and takes nm + sort(n)
      * @param data two-dimensional array to sort
      */
     public static void sortByColumns(int[][] data) {
@@ -102,11 +103,11 @@ public class StrangeMatrix {
     }
 
     /**
-     * Checks if passed array has rectangular form and all inner arrays are not equal to null.
-     * More formal, checks that all columns has same sizes equals to expectedSize.
-     * @param data array to check
+     * The method checks if given array has rectangular form and all inner arrays are not null.
+     * In other words, it checks that all columns have the same size equals to expectedSize.
+     * @param data input array
      * @param expectedSize expected column size
-     * @return true if every column has equal to expectedSize size and false otherwise
+     * @return true if every column has size equal to expectedSize and false otherwise
      */
     private static boolean isMatrixRectangular(int[][] data, int expectedSize) {
         for (int[] aData : data) {
@@ -118,12 +119,12 @@ public class StrangeMatrix {
     }
 
     /**
-     * This method appends line of data elements to the end of StringBuilder.
-     * It starts with (beginX, beginY) point and ends with (endX, endY) point.
+     * The method appends line of data elements to the end of StringBuilder.
+     * The line starts with (beginX, beginY) point and ends with (endX, endY) point.
      * <p>
-     * Lane must be horizontal or vertical. If it is not, IllegalArgumentException will be thrown.
+     * Line must be horizontal or vertical. If it is not, IllegalArgumentException will be thrown.
      */
-    private static void printLine(int[][] data, StringBuilder sb, int beginX, int beginY, int endX, int endY) {
+    private static void appendLine(int[][] data, StringBuilder sb, int beginX, int beginY, int endX, int endY) {
         if (beginX != endX && beginY != endY)
             throw new IllegalArgumentException();
 
