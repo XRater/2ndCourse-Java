@@ -1,3 +1,7 @@
+/**
+ *
+ */
+// Sadly, almost all methods have the same
 public class Trie {
 
     private static final int ALPHABET_SIZE = 26;
@@ -48,18 +52,8 @@ public class Trie {
      * @param element string to find
      */
     public boolean contains(String element) {
-        if (!isLegalString(element))
-            return false;
-
-        Vertex curr = root;
-        for (char c : element.toCharArray()) {
-            int index = getIndex(c);
-            if (curr.next[index] == null)
-                return false;
-            curr = curr.next[index];
-        }
-
-        return curr.isTerminal;
+        Vertex vertex = find(element);
+        return vertex != null && vertex.isTerminal;
     }
 
     /**
@@ -97,19 +91,24 @@ public class Trie {
      * Takes O(|prefix|) time.
      */
     public int howManyStartsWithPrefix(String prefix) {
-        if (!isLegalString(prefix))
-            return 0;
+        Vertex vertex = find(prefix);
+        return vertex == null ? 0 : vertex.startsWith;
+    }
+
+    private Vertex find(String element) {
+        if (!isLegalString(element)) {
+            return null;
+        }
 
         Vertex curr = root;
-        for (char c : prefix.toCharArray()) {
+        for (char c : element.toCharArray()) {
             int index = getIndex(c);
             if (curr.next[index] == null) {
-                return 0;
+                return null;
             }
             curr = curr.next[index];
         }
-
-        return curr.startsWith;
+        return curr;
     }
 
     private int getIndex(char c) {
@@ -132,7 +131,7 @@ public class Trie {
     static private class Vertex {
         private final Vertex[] next = new Vertex[ALPHABET_SIZE];
         private boolean isTerminal;
-        public int startsWith;
+        private int startsWith;
     }
 
 }
