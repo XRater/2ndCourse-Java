@@ -141,4 +141,48 @@ public class TrieTest {
 
         assertEquals(0, trie.size());
     }
+
+    @Test
+    public void testHowManyStartsWithPrefix() {
+        Trie trie = new Trie();
+        assertEquals(0, trie.howManyStartsWithPrefix(null));
+        assertEquals(0, trie.howManyStartsWithPrefix(""));
+        assertEquals(0, trie.howManyStartsWithPrefix("a"));
+        assertEquals(0, trie.howManyStartsWithPrefix("Asf"));
+
+        trie.add("one");
+        trie.add("two");
+        trie.add("one");
+        trie.add("");
+        trie.add("o");
+
+        assertEquals(4, trie.howManyStartsWithPrefix(""));
+        assertEquals(2, trie.howManyStartsWithPrefix("o"));
+        assertEquals(1, trie.howManyStartsWithPrefix("one"));
+        assertEquals(1, trie.howManyStartsWithPrefix("two"));
+        assertEquals(1, trie.howManyStartsWithPrefix("on"));
+        assertEquals(1, trie.howManyStartsWithPrefix("t"));
+        assertEquals(1, trie.howManyStartsWithPrefix("tw"));
+        assertEquals(0, trie.howManyStartsWithPrefix("onee"));
+
+        trie.remove("o");
+        assertEquals(3, trie.howManyStartsWithPrefix(""));
+        assertEquals(1, trie.howManyStartsWithPrefix("o"));
+        assertEquals(1, trie.howManyStartsWithPrefix("one"));
+        assertEquals(1, trie.howManyStartsWithPrefix("two"));
+        assertEquals(1, trie.howManyStartsWithPrefix("on"));
+        assertEquals(1, trie.howManyStartsWithPrefix("t"));
+        assertEquals(1, trie.howManyStartsWithPrefix("tw"));
+        assertEquals(0, trie.howManyStartsWithPrefix("onee"));
+
+        trie.remove("one");
+        assertEquals(2, trie.howManyStartsWithPrefix(""));
+        assertEquals(0, trie.howManyStartsWithPrefix("o"));
+        assertEquals(0, trie.howManyStartsWithPrefix("one"));
+        assertEquals(1, trie.howManyStartsWithPrefix("two"));
+        assertEquals(0, trie.howManyStartsWithPrefix("on"));
+        assertEquals(1, trie.howManyStartsWithPrefix("t"));
+        assertEquals(1, trie.howManyStartsWithPrefix("tw"));
+        assertEquals(0, trie.howManyStartsWithPrefix("onee"));
+    }
 }

@@ -33,10 +33,12 @@ public class Trie {
             if (curr.next[index] == null) {
                 curr.next[index] = new Vertex();
             }
+            curr.startsWith++;
             curr = curr.next[index];
         }
 
         curr.isTerminal = true;
+        curr.startsWith++;
         size++;
         return true;
     }
@@ -80,12 +82,34 @@ public class Trie {
             if (curr.next[index] == null) {
                 return false;
             }
+            curr.startsWith--;
             curr = curr.next[index];
         }
 
         curr.isTerminal = false;
+        curr.startsWith--;
         size--;
         return true;
+    }
+
+    /**
+     * The method returns number of stored strings starting with the given prefix.
+     * Takes O(|prefix|) time.
+     */
+    public int howManyStartsWithPrefix(String prefix) {
+        if (!isLegalString(prefix))
+            return 0;
+
+        Vertex curr = root;
+        for (char c : prefix.toCharArray()) {
+            int index = getIndex(c);
+            if (curr.next[index] == null) {
+                return 0;
+            }
+            curr = curr.next[index];
+        }
+
+        return curr.startsWith;
     }
 
     private int getIndex(char c) {
@@ -108,6 +132,7 @@ public class Trie {
     static private class Vertex {
         private final Vertex[] next = new Vertex[ALPHABET_SIZE];
         private boolean isTerminal;
+        public int startsWith;
     }
 
 }
