@@ -2,6 +2,9 @@ import org.junit.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Test class for Trie.
+ */
 public class TrieTest {
 
     @Test
@@ -82,5 +85,60 @@ public class TrieTest {
         assertTrue(trie.contains("o"));
         assertTrue(trie.contains("three"));
 
+    }
+
+    @Test
+    public void testSize() {
+        Trie trie = new Trie();
+        assertEquals(0, trie.size());
+
+        trie.add("one");
+        assertEquals(1, trie.size());
+
+        trie.add("one");
+        assertEquals(1, trie.size());
+
+        trie.add("");
+        assertEquals(2, trie.size());
+
+        trie.add("one");
+        assertEquals(2, trie.size());
+
+        assertThrows(IllegalArgumentException.class, () -> trie.add(null));
+        assertEquals(2, trie.size());
+
+        trie.add("two");
+        assertEquals(3, trie.size());
+    }
+
+    @Test
+    public void testRemove() {
+        Trie trie = new Trie();
+        assertFalse(trie.remove(null));
+        assertFalse(trie.remove(""));
+        assertFalse(trie.remove("asd"));
+        assertEquals(0, trie.size());
+
+        trie.add("one");
+        trie.add("o");
+        trie.add("two");
+        trie.add("");
+        trie.add("two");
+        assertEquals(4, trie.size());
+        assertTrue(trie.remove("o"));
+        assertEquals(3, trie.size());
+
+        assertFalse(trie.remove("o"));
+        assertFalse(trie.remove("on"));
+        assertFalse(trie.remove("tw"));
+
+        assertTrue(trie.remove("one"));
+        assertEquals(2, trie.size());
+
+        assertTrue(trie.remove("two"));
+        assertFalse(trie.remove("two"));
+        assertTrue(trie.remove(""));
+
+        assertEquals(0, trie.size());
     }
 }

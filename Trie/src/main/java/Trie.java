@@ -60,6 +60,34 @@ public class Trie {
         return curr.isTerminal;
     }
 
+    /**
+     * The method removes given String from Trie.
+     * The method returns false for all types of Illegal Arguments
+     * @param element String to remove
+     * @return true if the elements was in the Trie and false otherwise.
+     */
+    public boolean remove(String element) {
+        if (!isLegalString(element)) {
+            return false;
+        }
+        if (!this.contains(element)) {
+            return false;
+        }
+
+        Vertex curr = root;
+        for (char c : element.toCharArray()) {
+            int index = getIndex(c);
+            if (curr.next[index] == null) {
+                return false;
+            }
+            curr = curr.next[index];
+        }
+
+        curr.isTerminal = false;
+        size--;
+        return true;
+    }
+
     private int getIndex(char c) {
         return  c - 'a';
     }
