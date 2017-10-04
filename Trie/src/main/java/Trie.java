@@ -1,8 +1,9 @@
+import java.io.*;
+
 /**
  *
  */
-// Sadly, almost all methods have the same
-public class Trie {
+public class Trie implements Serializable {
 
     private static final int ALPHABET_SIZE = 26;
     private Vertex root = new Vertex();
@@ -95,6 +96,23 @@ public class Trie {
         return vertex == null ? 0 : vertex.startsWith;
     }
 
+    public void serialize(OutputStream out) throws IOException {
+        ObjectOutputStream os = new ObjectOutputStream(out);
+        os.writeObject(this);
+    }
+
+    public void deserialize(InputStream in) throws IOException {
+        ObjectInputStream is = new ObjectInputStream(in);
+        Trie tmp;
+        try {
+            tmp = (Trie) is.readObject();
+        } catch (ClassNotFoundException e) {
+            throw new IllegalArgumentException();
+        }
+        root = tmp.root;
+        size = tmp.size;
+    }
+
     private Vertex find(String element) {
         if (!isLegalString(element)) {
             return null;
@@ -128,7 +146,7 @@ public class Trie {
         return true;
     }
 
-    static private class Vertex {
+    static private class Vertex implements Serializable {
         private final Vertex[] next = new Vertex[ALPHABET_SIZE];
         private boolean isTerminal;
         private int startsWith;
