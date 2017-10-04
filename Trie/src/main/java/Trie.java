@@ -93,19 +93,25 @@ public class Trie implements Serializable {
         return vertex == null ? 0 : vertex.startsOn;
     }
 
+    /**
+     * The method writes the Trie to the given OutputStream as a sequence of bytes.
+     * @param out OutputStream to write in
+     */
     public void serialize(OutputStream out) throws IOException {
         ObjectOutputStream os = new ObjectOutputStream(out);
         os.writeObject(this);
     }
 
-    public void deserialize(InputStream in) throws IOException {
+    /**
+     * The method reads instance of the Trie class from the given InputStream and changes
+     * the actual one to it. If the InputStream does not contains Trie object in head
+     * ClassNotFoundException will be thrown.
+     * @param in InputStream to read from
+     */
+    public void deserialize(InputStream in) throws IOException, ClassNotFoundException {
         ObjectInputStream is = new ObjectInputStream(in);
         Trie tmp;
-        try {
-            tmp = (Trie) is.readObject();
-        } catch (ClassNotFoundException e) {
-            throw new IllegalArgumentException();
-        }
+        tmp = (Trie) is.readObject();
         root = tmp.root;
     }
 
