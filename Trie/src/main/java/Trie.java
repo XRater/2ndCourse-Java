@@ -7,13 +7,12 @@ public class Trie implements Serializable {
 
     private static final int ALPHABET_SIZE = 26;
     private Vertex root = new Vertex();
-    private int size;
 
     /**
      * The method returns size of Trie.
      */
     public int size() {
-        return size;
+        return root.startsOn;
     }
 
     /**
@@ -38,13 +37,12 @@ public class Trie implements Serializable {
             if (curr.next[index] == null) {
                 curr.next[index] = new Vertex();
             }
-            curr.startsWith++;
+            curr.startsOn++;
             curr = curr.next[index];
         }
 
         curr.isTerminal = true;
-        curr.startsWith++;
-        size++;
+        curr.startsOn++;
         return true;
     }
 
@@ -77,13 +75,12 @@ public class Trie implements Serializable {
             if (curr.next[index] == null) {
                 return false;
             }
-            curr.startsWith--;
+            curr.startsOn--;
             curr = curr.next[index];
         }
 
         curr.isTerminal = false;
-        curr.startsWith--;
-        size--;
+        curr.startsOn--;
         return true;
     }
 
@@ -93,7 +90,7 @@ public class Trie implements Serializable {
      */
     public int howManyStartsWithPrefix(String prefix) {
         Vertex vertex = find(prefix);
-        return vertex == null ? 0 : vertex.startsWith;
+        return vertex == null ? 0 : vertex.startsOn;
     }
 
     public void serialize(OutputStream out) throws IOException {
@@ -110,7 +107,6 @@ public class Trie implements Serializable {
             throw new IllegalArgumentException();
         }
         root = tmp.root;
-        size = tmp.size;
     }
 
     private Vertex find(String element) {
@@ -149,7 +145,7 @@ public class Trie implements Serializable {
     static private class Vertex implements Serializable {
         private final Vertex[] next = new Vertex[ALPHABET_SIZE];
         private boolean isTerminal;
-        private int startsWith;
+        private int startsOn;
     }
 
 }
