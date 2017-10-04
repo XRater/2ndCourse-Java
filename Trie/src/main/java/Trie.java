@@ -1,7 +1,9 @@
 import java.io.*;
 
 /**
- *
+ * Trie class implementation. This class stores lowercase latin strings. The class supports
+ * add, remove and contain operations. Also it is possible to count number of strings that
+ * starts with the given prefix. All operations take O(|string|) time to complete.
  */
 public class Trie implements Serializable {
 
@@ -17,8 +19,8 @@ public class Trie implements Serializable {
 
     /**
      * The method adds String to the Trie structure. All stored string must consist of
-     * lowercase english letters. If it is not, IllegalArgumentException will be thrown.
-     * If string is equal to null IllegalArgumentException will be thrown.
+     * lowercase latin letters. If it is not, IllegalArgumentException will be thrown.
+     * If string is equal to null IllegalArgumentException will be thrown as well.
      * @param element string to add
      * @return true if the string was the new one and false otherwise
      */
@@ -47,7 +49,7 @@ public class Trie implements Serializable {
     }
 
     /**
-     * The method checks if string is stored in Trie.
+     * The method checks if string is stored in the Trie.
      * @param element string to find
      */
     public boolean contains(String element) {
@@ -56,7 +58,7 @@ public class Trie implements Serializable {
     }
 
     /**
-     * The method removes given String from Trie.
+     * The method removes given String from the Trie.
      * The method returns false for all types of Illegal Arguments
      * @param element String to remove
      * @return true if the elements was in the Trie and false otherwise.
@@ -103,8 +105,8 @@ public class Trie implements Serializable {
     }
 
     /**
-     * The method reads instance of the Trie class from the given InputStream and changes
-     * the actual one to it.
+     * The method reads instance of Trie class from the given InputStream and replaces
+     * the actual one with it.
      * @param in InputStream to read from
      */
     public void deserialize(InputStream in) throws IOException, ClassNotFoundException {
