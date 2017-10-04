@@ -1,5 +1,7 @@
 import org.junit.Test;
 
+import java.io.*;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
@@ -184,5 +186,91 @@ public class TrieTest {
         assertEquals(1, trie.howManyStartsWithPrefix("t"));
         assertEquals(1, trie.howManyStartsWithPrefix("tw"));
         assertEquals(0, trie.howManyStartsWithPrefix("onee"));
+    }
+
+    @Test
+    public void testSerializeDeserializeEmpty() throws IOException, ClassNotFoundException {
+        ByteArrayOutputStream os;
+        ByteArrayInputStream is;
+
+        Trie trie = new Trie();
+        Trie other = new Trie();
+
+        os = new ByteArrayOutputStream();
+        other.serialize(os);
+        is = new ByteArrayInputStream(os.toByteArray());
+        trie.deserialize(is);
+
+        assertEquals(0, trie.size());
+        assertTrue(trie.add("hello"));
+        assertTrue(trie.contains("hello"));
+        assertEquals(1, trie.size());
+
+        other.serialize(os);
+        is = new ByteArrayInputStream(os.toByteArray());
+        trie.deserialize(is);
+
+        assertEquals(0, trie.size());
+        assertFalse(trie.contains("hello"));
+        assertTrue(trie.add("hello"));
+        assertTrue(trie.contains("hello"));
+        assertEquals(1, trie.size());
+    }
+
+    @Test
+    public void testSerializeDeserializeRegular() throws IOException, ClassNotFoundException {
+        ByteArrayOutputStream os;
+        ByteArrayInputStream is;
+
+        Trie trie = new Trie();
+        Trie other = new Trie();
+        other.add("one");
+        other.add("");
+        other.add("o");
+        other.add("two");
+
+        os = new ByteArrayOutputStream();
+        other.serialize(os);
+        is = new ByteArrayInputStream(os.toByteArray());
+        trie.deserialize(is);
+
+        assertEquals(4, trie.size());
+        assertTrue(trie.contains("one"));
+        assertTrue(trie.contains(""));
+        assertTrue(trie.contains("o"));
+        assertTrue(trie.contains("two"));
+        assertEquals(2, trie.howManyStartsWithPrefix("o"));
+
+        assertTrue(trie.remove("o"));
+        assertTrue(trie.remove("two"));
+        assertTrue(trie.add("t"));
+
+        other.serialize(os);
+        is = new ByteArrayInputStream(os.toByteArray());
+        trie.deserialize(is);
+
+        assertEquals(4, trie.size());
+        assertTrue(trie.contains("one"));
+        assertTrue(trie.contains(""));
+        assertTrue(trie.contains("o"));
+        assertTrue(trie.contains("two"));
+        assertEquals(2, trie.howManyStartsWithPrefix("o"));
+        assertFalse(trie.contains("t"));
+        assertEquals(1, trie.howManyStartsWithPrefix("t"));
+    }
+
+    @Test
+    public void testSerializeDeserializeException() throws IOException {
+        ByteArrayOutputStream os;
+        ByteArrayInputStream is;
+
+        Trie trie = new Trie();
+        Trie other = new Trie();
+
+        assertThrows(NullPointerException.class, () -> other.serialize(null));
+        os = new ByteArrayOutputStream();
+        os.write(10);
+        is = new ByteArrayInputStream(os.toByteArray());
+        assertThrows(IOException.class , () -> trie.deserialize(is));
     }
 }

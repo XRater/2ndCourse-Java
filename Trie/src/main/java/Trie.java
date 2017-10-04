@@ -104,8 +104,7 @@ public class Trie implements Serializable {
 
     /**
      * The method reads instance of the Trie class from the given InputStream and changes
-     * the actual one to it. If the InputStream does not contains Trie object in head
-     * ClassNotFoundException will be thrown.
+     * the actual one to it.
      * @param in InputStream to read from
      */
     public void deserialize(InputStream in) throws IOException, ClassNotFoundException {
