@@ -7,7 +7,7 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
 @SuppressWarnings("WeakerAccess")
-class Extractor {
+public class Extractor {
 
     private static final int DEFAULT_BUFFER_SIZE = 1024;
     private final int bufferSize;
@@ -19,7 +19,6 @@ class Extractor {
         buffer = new byte[bufferSize];
     }
 
-
     public Extractor(int bufferSize) {
         this.bufferSize = bufferSize;
         buffer = new byte[bufferSize];
@@ -27,6 +26,10 @@ class Extractor {
 
     public Statistic getStats() {
         return stats;
+    }
+
+    public void resetStats() {
+        stats.reset();
     }
 
     public void extractFiles(@NotNull String path, @NotNull String regex, String dest) throws IOException {
@@ -127,6 +130,12 @@ class Extractor {
          */
         public int failedExtractions() {
             return failedExtractions;
+        }
+
+        private void reset() {
+            extractedFiles.clear();
+            errorsNumber = 0;
+            failedExtractions = 0;
         }
     }
 }
