@@ -4,11 +4,11 @@ import java.io.IOException;
 
 /**
  * This class is a console utility for extracting files from zips.
- * Application takes source folder, regex, destination folder and
- * extracts files that matches regex from every zip in source folder
+ * Application takes source folder, regex, destination folder and then
+ * extracts files that matches regex from every zip in the source folder
  * to the destination folder.
  * <p>
- * Files will be extracted recursively.
+ * Files will be extracted recursively by folders.
  */
 public class ZipApp {
 
@@ -25,7 +25,6 @@ public class ZipApp {
         final Extractor extractor = new Extractor();
         try {
             extractor.extractFiles(args[0], args[1], args[2]);
-            extractor.extractFiles("./myFold", "file.*", "dest");
         } catch (final IOException e) {
             System.out.println("Source folder is illegal");
             return;

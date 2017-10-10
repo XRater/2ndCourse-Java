@@ -12,6 +12,10 @@ import java.util.zip.ZipOutputStream;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+/**
+ * Test class for Extractor class.
+ */
+@SuppressWarnings("LocalCanBeFinal")
 public class ExtractorTest {
 
     private final String sourceDir = "./source";
@@ -118,10 +122,11 @@ public class ExtractorTest {
         tearDown();
     }
 
-    private void testOneZip(@NotNull String[] input, String[] output, String zipName, @NotNull String regex) throws IOException {
+    private void testOneZip(@NotNull String[] input, String[] output, String zipName, @NotNull String regex) throws
+            IOException {
         setUp();
 
-        Extractor extractor = new Extractor();
+        Extractor extractor = new Extractor(64);
         createZip(input, zipName);
         extractor.extractFiles(sourceDir, regex, destDir);
 

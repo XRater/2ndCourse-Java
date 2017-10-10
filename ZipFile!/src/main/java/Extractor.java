@@ -6,6 +6,10 @@ import java.util.regex.Pattern;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
+/**
+ * This class implements a method to extract files from all zips in the folder.
+ * For more information see extractFiles() method.
+ */
 @SuppressWarnings("WeakerAccess")
 public class Extractor {
 
@@ -15,26 +19,55 @@ public class Extractor {
     @NotNull
     private final byte[] buffer;
 
+    /**
+     * Base constructor. Sets bufferSize to the default value.
+     */
     public Extractor() {
         bufferSize = DEFAULT_BUFFER_SIZE;
         buffer = new byte[bufferSize];
     }
 
+    /**
+     * Constructs Extractor object with the given buffer size.
+     */
     public Extractor(final int bufferSize) {
         this.bufferSize = bufferSize;
         buffer = new byte[bufferSize];
     }
 
+    /**
+     * @return class that contains extraction statistics
+     */
     @NotNull
     public Statistic getStats() {
         return stats;
     }
 
+    /**
+     * The method resets statistics.
+     */
     public void resetStats() {
         stats.reset();
     }
 
-    public void extractFiles(@NotNull final String path, @NotNull final String regex, final String dest) throws IOException {
+    /**
+     * The method finds all zips in the given folder and recursively extracts every file
+     * that matches regex to the destination folder.
+     * <p>
+     * Also the method collects extraction statistics such as the list of extracted files
+     * and number of files that were failed to be extracted.
+     * <p>
+     * Folder structure will not be affected.
+     *
+     * @param path  path to the folder with zips
+     * @param regex regex to match
+     * @param dest  path to the destination folder
+     * @throws IOException if the path does not point to the folder or folder does not have read access rights
+     */
+    public void extractFiles(@NotNull final String path, @NotNull final String regex, final String dest) throws
+            IOException {
+        resetStats();
+
         final File folder = new File(path);
         if (!folder.isDirectory()) {
             throw new IOException();
@@ -53,13 +86,15 @@ public class Extractor {
     }
 
     /**
-     * The method extracts all files matches regex patter from the given zip to the destination directory.
-     * @param zipName absolute path to zte zip
-     * @param regex regex to match
-     * @param dest destination folder
+     * The method extracts all files that match regex pattern from the given zip to the destination folder.
+     *
+     * @param zipName absolute path to the zip
+     * @param regex   regex to match
+     * @param dest    destination folder
      * @throws IOException if an I/O error occurs
      */
-    private void unzip(@NotNull final String zipName, @NotNull final String regex, final String dest) throws IOException {
+    private void unzip(@NotNull final String zipName, @NotNull final String regex, final String dest) throws
+            IOException {
         try (ZipInputStream zis = new ZipInputStream(new FileInputStream(zipName))) {
             for (ZipEntry ze = zis.getNextEntry(); ze != null; ze = zis.getNextEntry()) {
                 if (ze.isDirectory()) {
@@ -79,7 +114,8 @@ public class Extractor {
         }
     }
 
-    private void extractFile(final String dest, @NotNull final ZipInputStream zis, final String name) throws IOException {
+    private void extractFile(final String dest, @NotNull final ZipInputStream zis, final String name) throws
+            IOException {
         final File newFile = new File(dest + File.separator + name);
         //noinspection ResultOfMethodCallIgnored
         new File(newFile.getParent()).mkdirs();
@@ -95,6 +131,7 @@ public class Extractor {
     /**
      * Checks if the name argument corresponds to the existing zip file.
      * Also user must have reading rights for the file.
+     *
      * @param name absolute path to the zip file
      * @return true if the zip file is legal and false otherwise
      */
@@ -117,34 +154,36 @@ public class Extractor {
     }
 
     /**
-     * Class contains stats corresponded to extracting process.
+     * Class contains statistics that corresponds to the extracting process.
      * <p>
-     * You may get stats by calling extractor.getStats() method and reset it with
-     * extractor.reset() method.
+     * You can obtain statistics by calling extractor.getStats() method and reset it with
+     * the extractor.reset() method.
      * <p>
      * Class contains:
      * <table>
-     *     <tr>
-     *         List of successfully extracted files.
-     *     </tr>
-     *     <tr>
-     *         Number of files, witch extraction was failed
-     *     </tr>
-     *     <tr>
-     *         Number of zip for witch errors were occurred.
-     *     </tr>
+     * <tr>
+     * List of successfully extracted files.
+     * </tr>
+     * <tr>
+     * The number of files that failed to be extracted
+     * </tr>
+     * <tr>
+     * The number of zips for which errors have been occurred.
+     * </tr>
      * </table>
      */
     public static class Statistic {
 
         @NotNull
-        private ArrayList<String> extractedFiles = new ArrayList<>();
+        private final ArrayList<String> extractedFiles = new ArrayList<>();
         private int errorsNumber;
         private int failedExtractions;
 
-        private Statistic() {}
+        private Statistic() {
+        }
+
         /**
-         * @return list of pathes to extracted files from destination folder.
+         * @return list of paths to extracted files relative to the destination folder.
          */
         @NotNull
         public ArrayList<String> extractedFiles() {
@@ -152,14 +191,14 @@ public class Extractor {
         }
 
         /**
-         * @return number of errors occurred
+         * @return the number of errors occurred
          */
         public int errorsNumber() {
             return errorsNumber;
         }
 
         /**
-         * @return number of files witch extraction was failed
+         * @return the number of files that extraction was failed
          */
         public int failedExtractions() {
             return failedExtractions;
