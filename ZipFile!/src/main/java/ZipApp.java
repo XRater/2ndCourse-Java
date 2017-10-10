@@ -17,21 +17,21 @@ public class ZipApp {
      * <p>
      * Usage: source regex destination
      */
-    public static void main(@NotNull String[] args) {
+    public static void main(@NotNull final String[] args) {
         if (args.length != 3) {
             System.out.println("Usage: <source> <regex> <destination>");
             return;
         }
-        Extractor extractor = new Extractor();
+        final Extractor extractor = new Extractor();
         try {
             extractor.extractFiles(args[0], args[1], args[2]);
             extractor.extractFiles("./myFold", "file.*", "dest");
-        } catch (IOException e) {
+        } catch (final IOException e) {
             System.out.println("Source folder is illegal");
             return;
         }
 
-        Extractor.Statistic stats = extractor.getStats();
+        final Extractor.Statistic stats = extractor.getStats();
         if (stats.errorsNumber() != 0) {
             System.out.println("Extraction was failed with "
                     + stats.errorsNumber() + " errors");
@@ -39,7 +39,7 @@ public class ZipApp {
         }
         System.out.println("Extraction was successful");
         System.out.println(stats.extractedFiles().size() + " files were extracted:");
-        for (String name : stats.extractedFiles()) {
+        for (final String name : stats.extractedFiles()) {
             System.out.println(name);
         }
         System.out.println(stats.failedExtractions() +
