@@ -1,8 +1,23 @@
+import org.jetbrains.annotations.NotNull;
+
 import java.io.IOException;
 
+/**
+ * This class is a console utility for extracting files from zips.
+ * Application takes source folder, regex, destination folder and
+ * extracts files that matches regex from every zip in source folder
+ * to the destination folder.
+ * <p>
+ * Files will be extracted recursively.
+ */
 public class ZipApp {
 
-    public static void main(String[] args) {
+    /**
+     * Main activity.
+     * <p>
+     * Usage: source regex destination
+     */
+    public static void main(@NotNull String[] args) {
         if (args.length != 3) {
             System.out.println("Usage: <source> <regex> <destination>");
             return;
@@ -10,6 +25,7 @@ public class ZipApp {
         Extractor extractor = new Extractor();
         try {
             extractor.extractFiles(args[0], args[1], args[2]);
+            extractor.extractFiles("./myFold", "file.*", "dest");
         } catch (IOException e) {
             System.out.println("Source folder is illegal");
             return;

@@ -1,11 +1,11 @@
-import org.junit.After;
-import org.junit.Before;
+import org.jetbrains.annotations.NotNull;
 import org.junit.Test;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Random;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
@@ -14,18 +14,19 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ExtractorTest {
 
+    private final String sourceDir = "./source";
+    private final String destDir = "./dest";
+    private final Random r = new Random();
 
-    private String sourceDir = "./sorce";
-    private String destDir = "./dest";
-
-    public void setUp() {
+    @SuppressWarnings("ResultOfMethodCallIgnored")
+    private void setUp() {
         File source = new File(sourceDir);
-        assertTrue(source.mkdir());
+        source.mkdir();
         File dest = new File(destDir);
-        assertTrue(dest.mkdir());
+        dest.mkdir();
     }
 
-    public void tearDown() {
+    private void tearDown() {
         deleteFile(sourceDir);
         deleteFile(destDir);
     }
@@ -82,9 +83,42 @@ public class ExtractorTest {
                 new String[]{"file"}, "zip", "....");
         testOneZip(new String[]{"file", "file2"},
                 new String[]{"file", "file2"}, "MyZip.txt", "file2?");
+        testOneZip(new String[]{"file", "file2.1", "word.txt"},
+                new String[]{"file2.1", "word.txt"}, "MyZip.txt", ".*\\..*");
     }
 
-    private void testOneZip(String[] input, String[] output, String zipName, String regex) throws IOException {
+    @Test
+    public void testExtractFilesWithInnerFolders() throws IOException {
+        testOneZip(new String[]{"folder/"},
+                new String[]{""}, "zip.zip", ".*");
+        testOneZip(new String[]{"folder/file", "folder/file2"},
+                new String[]{"folder/file", "folder/file2"},
+                "zip.zip", "file.*");
+        testOneZip(new String[]{"folder/"},
+                new String[]{""}, "zip.zip", ".*");
+        testOneZip(new String[]{"folder/", "file"},
+                new String[]{"file"}, "zip.zip", "f.*");
+        testOneZip(new String[]{"folder/inner/file.txt", "af", "folder/inner2/", "f/", "file2"},
+                new String[]{"folder/inner/file.txt", "file2"}, "zip.zip", "f.*");
+    }
+
+    @Test
+    public void testExtractFilesMoreZips() throws IOException {
+        setUp();
+
+        createZip(new String[]{"one", "two", "three"}, "zip1.zip");
+        createZip(new String[]{"one.1", "two.1", "three.1"}, "zip2.zip");
+
+        Extractor extractor = new Extractor();
+        extractor.extractFiles(sourceDir, "t.*", destDir);
+        Extractor.Statistic stats = extractor.getStats();
+
+        assertEquals("[two.1, three.1, two, three]", stats.extractedFiles().toString());
+
+        tearDown();
+    }
+
+    private void testOneZip(@NotNull String[] input, String[] output, String zipName, @NotNull String regex) throws IOException {
         setUp();
 
         Extractor extractor = new Extractor();
@@ -95,6 +129,11 @@ public class ExtractorTest {
         assertEquals(Arrays.toString(output), stats.extractedFiles().toString());
         extractor.resetStats();
 
+        for (String name : stats.extractedFiles()) {
+            File file = new File(destDir + File.separator + name);
+            assertTrue(file.exists());
+        }
+
         assertEquals(stats.extractedFiles().toString(), "[]");
         assertEquals(stats.failedExtractions(), 0);
         assertEquals(stats.errorsNumber(), 0);
@@ -102,23 +141,26 @@ public class ExtractorTest {
         tearDown();
     }
 
-    private void createZip(String[] files, String name) throws IOException {
+    private void createZip(@NotNull String[] files, String name) throws IOException {
         try (ZipOutputStream zos = new ZipOutputStream(
                 new FileOutputStream(sourceDir + File.separator + name))) {
             for (String file : files) {
                 zos.putNextEntry(new ZipEntry(file));
+                byte[] bytes = new byte[r.nextInt(1000)];
+                r.nextBytes(bytes);
+                zos.write(bytes);
             }
         }
     }
 
+    @SuppressWarnings("ResultOfMethodCallIgnored")
     private void createFile(String name) throws IOException {
         File file = new File(sourceDir + File.separator + name);
-        //noinspection ResultOfMethodCallIgnored
         new File(file.getParent()).mkdirs();
-        assertTrue(file.createNewFile());
+        file.createNewFile();
     }
 
-    private void deleteFile(String name) {
+    private void deleteFile(@NotNull String name) {
         File file = new File(name);
         if (!file.isDirectory()) {
             assertTrue(file.delete());

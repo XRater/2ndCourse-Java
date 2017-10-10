@@ -12,6 +12,7 @@ public class Extractor {
     private static final int DEFAULT_BUFFER_SIZE = 1024;
     private final int bufferSize;
     private final Statistic stats = new Statistic();
+    @NotNull
     private final byte[] buffer;
 
     public Extractor() {
@@ -24,6 +25,7 @@ public class Extractor {
         buffer = new byte[bufferSize];
     }
 
+    @NotNull
     public Statistic getStats() {
         return stats;
     }
@@ -63,12 +65,13 @@ public class Extractor {
                 if (ze.isDirectory()) {
                     continue;
                 }
-                String name = ze.getName();
+                String fullName = ze.getName();
+                String name = getFileName(fullName);
                 if (!Pattern.matches(regex, name)) {
                     continue;
                 }
                 try {
-                    extractFile(dest, zis, name);
+                    extractFile(dest, zis, fullName);
                 } catch (IOException e) {
                     stats.failedExtractions++;
                 }
@@ -76,14 +79,15 @@ public class Extractor {
         }
     }
 
-    private void extractFile(String dest, ZipInputStream zis, String name) throws IOException {
+    private void extractFile(String dest, @NotNull ZipInputStream zis, String name) throws IOException {
         File newFile = new File(dest + File.separator + name);
         //noinspection ResultOfMethodCallIgnored
         new File(newFile.getParent()).mkdirs();
-        FileOutputStream fos = new FileOutputStream(newFile);
-        int len;
-        while ((len = zis.read(buffer)) > 0) {
-            fos.write(buffer, 0, len);
+        try (FileOutputStream fos = new FileOutputStream(newFile)) {
+            int len;
+            while ((len = zis.read(buffer)) > 0) {
+                fos.write(buffer, 0, len);
+            }
         }
         stats.extractedFiles.add(name);
     }
@@ -106,14 +110,35 @@ public class Extractor {
         }
     }
 
+    @NotNull
+    private String getFileName(@NotNull String fullName) {
+        int lastSeparator = fullName.lastIndexOf(File.separatorChar);
+        return fullName.substring(lastSeparator + 1);
+    }
+
+    /**
+     * Class contains stats corresponded to extracting process.
+     * <p>
+     * You may get stats by calling extractor.getStats() method and reset it with
+     * extractor.reset() method.
+     * <p>
+     * Class contains:
+     * <table>
+     *     <tr>
+     * </table>
+     */
     public static class Statistic {
+
+        @NotNull
         private ArrayList<String> extractedFiles = new ArrayList<>();
         private int errorsNumber;
         private int failedExtractions;
 
+        private Statistic() {}
         /**
          * @return list of pathes to extracted files from destination folder.
          */
+        @NotNull
         public ArrayList<String> extractedFiles() {
             return extractedFiles;
         }
