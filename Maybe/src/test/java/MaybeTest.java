@@ -7,22 +7,22 @@ public class MaybeTest {
 
     @Test
     public void testIsPresent() {
-        Maybe<Integer> eMI = Maybe.nothing();
-        Maybe<String> eMS = Maybe.nothing();
-        Maybe<Maybe<Character>> eMM = Maybe.nothing();
+        final Maybe<Integer> eMI = Maybe.nothing();
+        final Maybe<String> eMS = Maybe.nothing();
+        final Maybe<Maybe<Character>> eMM = Maybe.nothing();
         assertFalse(eMI.isPresent());
         assertFalse(eMS.isPresent());
         assertFalse(eMM.isPresent());
 
-        Maybe<Integer> mI = Maybe.just(0);
-        Maybe<Integer> mI1 = Maybe.just(1);
-        Maybe<Integer> mIN = Maybe.just(null);
-        Maybe<String> mS = Maybe.just("hello");
-        Maybe<String> mSE = Maybe.just("");
-        Maybe<String> mSN = Maybe.just(null);
-        Maybe<Maybe<Character>> mM = Maybe.just(Maybe.just('c'));
-        Maybe<Maybe<Character>> mMN = Maybe.just(Maybe.nothing());
-        Maybe<Maybe<Character>> mMNL = Maybe.just(null);
+        final Maybe<Integer> mI = Maybe.just(0);
+        final Maybe<Integer> mI1 = Maybe.just(1);
+        final Maybe<Integer> mIN = Maybe.just(null);
+        final Maybe<String> mS = Maybe.just("hello");
+        final Maybe<String> mSE = Maybe.just("");
+        final Maybe<String> mSN = Maybe.just(null);
+        final Maybe<Maybe<Character>> mM = Maybe.just(Maybe.just('c'));
+        final Maybe<Maybe<Character>> mMN = Maybe.just(Maybe.nothing());
+        final Maybe<Maybe<Character>> mMNL = Maybe.just(null);
 
         assertTrue(mI.isPresent());
         assertTrue(mI1.isPresent());
@@ -37,23 +37,23 @@ public class MaybeTest {
 
     @Test
     public void testGet() throws NoElementInMaybeException {
-        Maybe<Integer> eMI = Maybe.nothing();
-        Maybe<String> eMS = Maybe.nothing();
-        Maybe<Maybe<Character>> eMM = Maybe.nothing();
+        final Maybe<Integer> eMI = Maybe.nothing();
+        final Maybe<String> eMS = Maybe.nothing();
+        final Maybe<Maybe<Character>> eMM = Maybe.nothing();
 
         assertThrows(NoElementInMaybeException.class, eMI::get);
         assertThrows(NoElementInMaybeException.class, eMS::get);
         assertThrows(NoElementInMaybeException.class, eMM::get);
 
-        Maybe<Integer> mI = Maybe.just(0);
-        Maybe<Integer> mI1 = Maybe.just(1);
-        Maybe<Integer> mIN = Maybe.just(null);
-        Maybe<String> mS = Maybe.just("hello");
-        Maybe<String> mSE = Maybe.just("");
-        Maybe<String> mSN = Maybe.just(null);
-        Maybe<Maybe<Character>> mM = Maybe.just(Maybe.just('c'));
-        Maybe<Maybe<Character>> mMN = Maybe.just(Maybe.nothing());
-        Maybe<Maybe<Character>> mMNL = Maybe.just(null);
+        final Maybe<Integer> mI = Maybe.just(0);
+        final Maybe<Integer> mI1 = Maybe.just(1);
+        final Maybe<Integer> mIN = Maybe.just(null);
+        final Maybe<String> mS = Maybe.just("hello");
+        final Maybe<String> mSE = Maybe.just("");
+        final Maybe<String> mSN = Maybe.just(null);
+        final Maybe<Maybe<Character>> mM = Maybe.just(Maybe.just('c'));
+        final Maybe<Maybe<Character>> mMN = Maybe.just(Maybe.nothing());
+        final Maybe<Maybe<Character>> mMNL = Maybe.just(null);
 
         assertEquals(new Integer(0), mI.get());
         assertEquals(new Integer(1), mI1.get());
@@ -68,12 +68,12 @@ public class MaybeTest {
 
     @Test
     public void testMap() {
-        Maybe<Integer> eI = Maybe.nothing();
-        Maybe<Integer> mI = Maybe.just(0);
-        Maybe<Integer> mI1 = Maybe.just(1);
-        Maybe<Integer> mN = Maybe.just(null);
-        Maybe<String> mS = Maybe.just("hello");
-        Maybe<String> mS1 = Maybe.just("second");
+        final Maybe<Integer> eI = Maybe.nothing();
+        final Maybe<Integer> mI = Maybe.just(0);
+        final Maybe<Integer> mI1 = Maybe.just(1);
+        final Maybe<Integer> mN = Maybe.just(null);
+        final Maybe<String> mS = Maybe.just("hello");
+        final Maybe<String> mS1 = Maybe.just("second");
 
         assertEquals(Maybe.nothing(), eI.map((n) -> n + 1));
         assertEquals(Maybe.just(1), mI.map((n) -> n + 1));
@@ -88,7 +88,7 @@ public class MaybeTest {
 
     @Test
     public void testMapInch() throws NoElementInMaybeException {
-        Maybe<Derived> mD = Maybe.just(new Derived());
+        final Maybe<Derived> mD = Maybe.just(new Derived());
 
         assertEquals(mD, mD.map(Functions::returnDerived));
         assertEquals(mD, mD.map(Functions::returnBase));
@@ -113,11 +113,11 @@ public class MaybeTest {
 
     private static class Functions {
 
-        static Base returnBase(Base b) {
+        static Base returnBase(final Base b) {
             return b;
         }
 
-        static Derived returnDerived(Derived d) {
+        static Derived returnDerived(final Derived d) {
             return d;
         }
     }

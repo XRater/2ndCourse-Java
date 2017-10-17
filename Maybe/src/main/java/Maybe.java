@@ -7,13 +7,14 @@ import java.util.function.Function;
 /**
  * @param <T> type to store
  */
+@SuppressWarnings("WeakerAccess")
 public class Maybe<T> {
 
     @Nullable
     private final T value;
     private final boolean empty;
 
-    public static <T> Maybe<T> just(@Nullable T t) {
+    public static <T> Maybe<T> just(@Nullable final T t) {
         return new Maybe<>(t);
     }
 
@@ -26,7 +27,7 @@ public class Maybe<T> {
         empty = true;
     }
 
-    private Maybe(@Nullable T t) {
+    private Maybe(@Nullable final T t) {
         value = t;
         empty = false;
     }
@@ -45,7 +46,7 @@ public class Maybe<T> {
 
     @NotNull
     public <U> Maybe<U> map(
-            @NotNull Function<? super T, U> mapper) {
+            @NotNull final Function<? super T, U> mapper) {
         if (empty) {
             return new Maybe<>();
         }
@@ -55,7 +56,7 @@ public class Maybe<T> {
     @Override
     public boolean equals(final Object o) {
         if (o instanceof Maybe<?>) {
-            Maybe<?> om = (Maybe<?>) o;
+            final Maybe<?> om = (Maybe<?>) o;
             if (empty) {
                 return om.empty;
             }
