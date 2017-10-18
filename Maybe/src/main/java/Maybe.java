@@ -5,7 +5,13 @@ import org.jetbrains.annotations.Nullable;
 import java.util.function.Function;
 
 /**
- * 
+ * The class is supposed to be used when the result of a function may not exists.
+ * <p>
+ * For example, if you need to find an element in some Collection you may use Maybe as a return value.
+ * In that case if the value was found Maybe.just(value) will be returned, otherwise you may return
+ * Maybe.nothing(). Using maybe is a much safer way then using null pointers as a return value if
+ * it was not found in Collection.
+ *
  * @param <T> type of the stored value.
  */
 @SuppressWarnings("WeakerAccess")

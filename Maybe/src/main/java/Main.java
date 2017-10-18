@@ -5,10 +5,21 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * This class is a console utility to work with files. The utility reads lines from the input file
+ * and writes found numbers to the output file (if the line was a number it writes the number, and null otherwise)
+ * <p>
+ * Maybe class is used for implementation.
+ */
 public class Main {
 
     private final static ArrayList<Maybe<Integer>> list = new ArrayList<>();
 
+    /**
+     * Main method in the class. For more information see class docs
+     *
+     * @param args: source dest
+     */
     public static void main(@NotNull final String[] args) {
         if (args.length != 2) {
             System.out.println("Usage: <source> <dest>");
@@ -33,18 +44,19 @@ public class Main {
         out.createNewFile();
         final Writer writer = new FileWriter(new File(output));
         for (final Maybe<Integer> maybe : list) {
-            try {
-                if (!maybe.isPresent()) {
-                    writer.write("null");
-                } else {
+            if (!maybe.isPresent()) {
+                writer.write("null");
+            } else {
+                Integer value = 0;
+                try {
                     //noinspection ConstantConditions
-                    final Integer value = maybe.get() * maybe.get();
-                    writer.write(value.toString());
+                    value = maybe.get() * maybe.get();
+                } catch (final NoElementInMaybeException e) {
+                    System.out.println("There was no value in Maybe. Check for the Maybe class version.");
                 }
-                writer.write('\n');
-            } catch (@NotNull final NoElementInMaybeException e) {
-                System.out.println("There was no value in Maybe. Check for the Maybe class version.");
+                writer.write(value.toString());
             }
+            writer.write('\n');
         }
         writer.flush();
     }
