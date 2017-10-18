@@ -7,6 +7,9 @@ import java.util.Scanner;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+/**
+ * Test class for main application.
+ */
 @SuppressWarnings("SameParameterValue")
 public class MainTest {
 
@@ -14,8 +17,8 @@ public class MainTest {
     public void testMain() throws IOException {
         testInput(new String[]{},
                 new String[]{});
-        testInput(new String[]{"123", "null", "4"},
-                new String[]{"123", "null", "4"});
+        testInput(new String[]{"1", "null", "4"},
+                new String[]{"1", "null", "16"});
         testInput(new String[]{"1"},
                 new String[]{"1"});
         testInput(new String[]{"h2i", "13null", "there"},

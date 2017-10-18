@@ -34,11 +34,12 @@ public class Main {
         final Writer writer = new FileWriter(new File(output));
         for (final Maybe<Integer> maybe : list) {
             try {
-                if (maybe.get() == null) {
+                if (!maybe.isPresent()) {
                     writer.write("null");
                 } else {
                     //noinspection ConstantConditions
-                    writer.write(maybe.get().toString());
+                    final Integer value = maybe.get() * maybe.get();
+                    writer.write(value.toString());
                 }
                 writer.write('\n');
             } catch (@NotNull final NoElementInMaybeException e) {
@@ -55,7 +56,7 @@ public class Main {
             try {
                 list.add(Maybe.just(Integer.parseInt(line)));
             } catch (@NotNull final NumberFormatException e) {
-                list.add(Maybe.just(null));
+                list.add(Maybe.nothing());
             }
         }
     }

@@ -1,12 +1,17 @@
+
 import exceptions.NoElementInMaybeException;
 import org.junit.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Test class for Maybe class.
+ */
 public class MaybeTest {
 
     @Test
     public void testIsPresent() {
+
         final Maybe<Integer> eMI = Maybe.nothing();
         final Maybe<String> eMS = Maybe.nothing();
         final Maybe<Maybe<Character>> eMM = Maybe.nothing();
