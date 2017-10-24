@@ -1,4 +1,7 @@
+package ru.mit.spbau.kirakosian;
+
 import org.junit.Test;
+import ru.spbau.mit.kirakosian.Trie;
 
 import java.io.*;
 
