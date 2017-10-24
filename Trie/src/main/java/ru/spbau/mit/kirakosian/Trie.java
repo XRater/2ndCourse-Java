@@ -26,7 +26,7 @@ public class Trie implements Serializable {
      * @param element string to add
      * @return true if the string was the new one and false otherwise
      */
-    public boolean add(String element) {
+    public boolean add(final String element) {
         if (!isLegalString(element)) {
             throw new IllegalArgumentException();
         }
@@ -36,8 +36,8 @@ public class Trie implements Serializable {
 
         Vertex curr = root;
 
-        for (char c : element.toCharArray()) {
-            int index  = getIndex(c);
+        for (final char c : element.toCharArray()) {
+            final int index  = getIndex(c);
             if (curr.next[index] == null) {
                 curr.next[index] = new Vertex();
             }
@@ -54,8 +54,8 @@ public class Trie implements Serializable {
      * The method checks if string is stored in the Trie.
      * @param element string to find
      */
-    public boolean contains(String element) {
-        Vertex vertex = find(element);
+    public boolean contains(final String element) {
+        final Vertex vertex = find(element);
         return vertex != null && vertex.isTerminal;
     }
 
@@ -65,7 +65,7 @@ public class Trie implements Serializable {
      * @param element String to remove
      * @return true if the elements was in the Trie and false otherwise.
      */
-    public boolean remove(String element) {
+    public boolean remove(final String element) {
         if (!isLegalString(element)) {
             return false;
         }
@@ -74,8 +74,8 @@ public class Trie implements Serializable {
         }
 
         Vertex curr = root;
-        for (char c : element.toCharArray()) {
-            int index = getIndex(c);
+        for (final char c : element.toCharArray()) {
+            final int index = getIndex(c);
             if (curr.next[index] == null) {
                 return false;
             }
@@ -92,8 +92,8 @@ public class Trie implements Serializable {
      * The method returns number of stored strings starting with the given prefix.
      * Takes O(|prefix|) time.
      */
-    public int howManyStartsWithPrefix(String prefix) {
-        Vertex vertex = find(prefix);
+    public int howManyStartsWithPrefix(final String prefix) {
+        final Vertex vertex = find(prefix);
         return vertex == null ? 0 : vertex.startsOn;
     }
 
@@ -101,8 +101,8 @@ public class Trie implements Serializable {
      * The method writes the Trie to the given OutputStream as a sequence of bytes.
      * @param out OutputStream to write in
      */
-    public void serialize(OutputStream out) throws IOException {
-        ObjectOutputStream os = new ObjectOutputStream(out);
+    public void serialize(final OutputStream out) throws IOException {
+        final ObjectOutputStream os = new ObjectOutputStream(out);
         os.writeObject(this);
     }
 
@@ -111,21 +111,21 @@ public class Trie implements Serializable {
      * the actual one with it.
      * @param in InputStream to read from
      */
-    public void deserialize(InputStream in) throws IOException, ClassNotFoundException {
-        ObjectInputStream is = new ObjectInputStream(in);
-        Trie tmp;
+    public void deserialize(final InputStream in) throws IOException, ClassNotFoundException {
+        final ObjectInputStream is = new ObjectInputStream(in);
+        final Trie tmp;
         tmp = (Trie) is.readObject();
         root = tmp.root;
     }
 
-    private Vertex find(String element) {
+    private Vertex find(final String element) {
         if (!isLegalString(element)) {
             return null;
         }
 
         Vertex curr = root;
-        for (char c : element.toCharArray()) {
-            int index = getIndex(c);
+        for (final char c : element.toCharArray()) {
+            final int index = getIndex(c);
             if (curr.next[index] == null) {
                 return null;
             }
@@ -134,11 +134,11 @@ public class Trie implements Serializable {
         return curr;
     }
 
-    private int getIndex(char c) {
+    private int getIndex(final char c) {
         return  c - 'a';
     }
 
-    private boolean isLegalString(String s) {
+    private boolean isLegalString(final String s) {
         if (s == null) {
             return false;
         }

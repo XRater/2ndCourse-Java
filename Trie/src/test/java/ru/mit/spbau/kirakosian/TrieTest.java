@@ -14,7 +14,7 @@ public class TrieTest {
 
     @Test
     public void testAddExceptions() {
-        Trie trie = new Trie();
+        final Trie trie = new Trie();
         assertThrows(IllegalArgumentException.class,
                 () -> trie.add(null));
         assertThrows(IllegalArgumentException.class,
@@ -37,7 +37,7 @@ public class TrieTest {
 
     @Test
     public void testAdd() {
-        Trie trie = new Trie();
+        final Trie trie = new Trie();
         assertTrue(trie.add("one"));
         assertTrue(trie.add("on"));
         assertTrue(trie.add("o"));
@@ -61,7 +61,7 @@ public class TrieTest {
 
     @Test
     public void testContains() {
-        Trie trie = new Trie();
+        final Trie trie = new Trie();
         assertFalse(trie.contains(null));
         assertFalse(trie.contains("one"));
         assertFalse(trie.contains(""));
@@ -94,7 +94,7 @@ public class TrieTest {
 
     @Test
     public void testSize() {
-        Trie trie = new Trie();
+        final Trie trie = new Trie();
         assertEquals(0, trie.size());
 
         trie.add("one");
@@ -118,7 +118,7 @@ public class TrieTest {
 
     @Test
     public void testRemove() {
-        Trie trie = new Trie();
+        final Trie trie = new Trie();
         assertFalse(trie.remove(null));
         assertFalse(trie.remove(""));
         assertFalse(trie.remove("asd"));
@@ -149,7 +149,7 @@ public class TrieTest {
 
     @Test
     public void testHowManyStartsWithPrefix() {
-        Trie trie = new Trie();
+        final Trie trie = new Trie();
         assertEquals(0, trie.howManyStartsWithPrefix(null));
         assertEquals(0, trie.howManyStartsWithPrefix(""));
         assertEquals(0, trie.howManyStartsWithPrefix("a"));
@@ -193,11 +193,11 @@ public class TrieTest {
 
     @Test
     public void testSerializeDeserializeEmpty() throws IOException, ClassNotFoundException {
-        ByteArrayOutputStream os;
+        final ByteArrayOutputStream os;
         ByteArrayInputStream is;
 
-        Trie trie = new Trie();
-        Trie other = new Trie();
+        final Trie trie = new Trie();
+        final Trie other = new Trie();
 
         os = new ByteArrayOutputStream();
         other.serialize(os);
@@ -222,11 +222,11 @@ public class TrieTest {
 
     @Test
     public void testSerializeDeserializeRegular() throws IOException, ClassNotFoundException {
-        ByteArrayOutputStream os;
+        final ByteArrayOutputStream os;
         ByteArrayInputStream is;
 
-        Trie trie = new Trie();
-        Trie other = new Trie();
+        final Trie trie = new Trie();
+        final Trie other = new Trie();
         other.add("one");
         other.add("");
         other.add("o");
@@ -264,11 +264,11 @@ public class TrieTest {
 
     @Test
     public void testSerializeDeserializeException() throws IOException {
-        ByteArrayOutputStream os;
-        ByteArrayInputStream is;
+        final ByteArrayOutputStream os;
+        final ByteArrayInputStream is;
 
-        Trie trie = new Trie();
-        Trie other = new Trie();
+        final Trie trie = new Trie();
+        final Trie other = new Trie();
 
         assertThrows(NullPointerException.class, () -> other.serialize(null));
         os = new ByteArrayOutputStream();
