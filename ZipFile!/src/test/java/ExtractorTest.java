@@ -1,9 +1,13 @@
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.*;
+
 import org.jetbrains.annotations.NotNull;
 import org.junit.Test;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 import java.util.zip.ZipEntry;
@@ -94,12 +98,12 @@ public class ExtractorTest {
     @Test
     public void testExtractFilesWithInnerFolders() throws IOException {
         testOneZip(new String[]{"folder/"},
-                new String[]{""}, "zip.zip", ".*");
+                new String[]{}, "zip.zip", ".*");
         testOneZip(new String[]{"folder/file", "folder/file2"},
                 new String[]{"folder/file", "folder/file2"},
                 "zip.zip", "file.*");
         testOneZip(new String[]{"folder/"},
-                new String[]{""}, "zip.zip", ".*");
+                new String[]{}, "zip.zip", ".*");
         testOneZip(new String[]{"folder/", "file"},
                 new String[]{"file"}, "zip.zip", "f.*");
         testOneZip(new String[]{"folder/inner/file.txt", "af", "folder/inner2/", "f/", "file2"},
@@ -117,7 +121,8 @@ public class ExtractorTest {
         extractor.extractFiles(sourceDir, "t.*", destDir);
         Extractor.Statistic stats = extractor.getStats();
 
-        assertEquals("[two.1, three.1, two, three]", stats.extractedFiles().toString());
+        assertThat(Arrays.asList("two.1", "three.1", "two", "three"),
+                containsInAnyOrder(stats.extractedFiles().toArray()));
 
         tearDown();
     }
@@ -131,7 +136,10 @@ public class ExtractorTest {
         extractor.extractFiles(sourceDir, regex, destDir);
 
         Extractor.Statistic stats = extractor.getStats();
-        assertEquals(Arrays.toString(output), stats.extractedFiles().toString());
+        System.err.println(Arrays.asList(output));
+        System.err.println(Arrays.toString(stats.extractedFiles().toArray()));
+        assertThat(Arrays.asList(output),
+                containsInAnyOrder(stats.extractedFiles().toArray()));
         extractor.resetStats();
 
         for (String name : stats.extractedFiles()) {
