@@ -16,6 +16,7 @@ public class Extractor {
     private static final int DEFAULT_BUFFER_SIZE = 1024;
     private final int bufferSize;
     private final Statistic stats = new Statistic();
+
     @NotNull
     private final byte[] buffer;
 
@@ -36,7 +37,7 @@ public class Extractor {
     }
 
     /**
-     * @return class that contains extraction statistics
+     * Returns class that contains extraction statistics
      */
     @NotNull
     public Statistic getStats() {
@@ -183,7 +184,7 @@ public class Extractor {
         }
 
         /**
-         * @return list of paths to extracted files relative to the destination folder.
+         * Returns list of paths to extracted files relative to the destination folder.
          */
         @NotNull
         public ArrayList<String> extractedFiles() {
@@ -191,14 +192,14 @@ public class Extractor {
         }
 
         /**
-         * @return the number of errors occurred
+         * Returns the number of errors occurred
          */
         public int errorsNumber() {
             return errorsNumber;
         }
 
         /**
-         * @return the number of files that extraction was failed
+         * Returns the number of files that extraction was failed
          */
         public int failedExtractions() {
             return failedExtractions;

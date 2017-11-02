@@ -43,14 +43,14 @@ public class ExtractorTest {
         extractor.extractFiles(sourceDir, ".*", destDir);
 
         Extractor.Statistic stats = extractor.getStats();
-        assertEquals(stats.extractedFiles().toString(), "[]");
-        assertEquals(stats.failedExtractions(), 0);
-        assertEquals(stats.errorsNumber(), 0);
+        assertEquals("[]", stats.extractedFiles().toString());
+        assertEquals(0, stats.failedExtractions());
+        assertEquals(0, stats.errorsNumber());
 
         extractor.resetStats();
-        assertEquals(stats.extractedFiles().toString(), "[]");
-        assertEquals(stats.failedExtractions(), 0);
-        assertEquals(stats.errorsNumber(), 0);
+        assertEquals("[]", stats.extractedFiles().toString());
+        assertEquals(0, stats.failedExtractions());
+        assertEquals(0, stats.errorsNumber());
 
         tearDown();
     }
@@ -67,14 +67,14 @@ public class ExtractorTest {
         extractor.extractFiles(sourceDir, ".*", destDir);
 
         Extractor.Statistic stats = extractor.getStats();
-        assertEquals(stats.extractedFiles().toString(), "[]");
-        assertEquals(stats.failedExtractions(), 0);
-        assertEquals(stats.errorsNumber(), 0);
+        assertEquals("[]", stats.extractedFiles().toString());
+        assertEquals(0, stats.failedExtractions());
+        assertEquals(0, stats.errorsNumber());
 
         extractor.resetStats();
-        assertEquals(stats.extractedFiles().toString(), "[]");
-        assertEquals(stats.failedExtractions(), 0);
-        assertEquals(stats.errorsNumber(), 0);
+        assertEquals("[]", stats.extractedFiles().toString());
+        assertEquals(0, stats.failedExtractions());
+        assertEquals(0, stats.errorsNumber());
 
         tearDown();
     }
@@ -139,9 +139,9 @@ public class ExtractorTest {
             assertTrue(file.exists());
         }
 
-        assertEquals(stats.extractedFiles().toString(), "[]");
-        assertEquals(stats.failedExtractions(), 0);
-        assertEquals(stats.errorsNumber(), 0);
+        assertEquals("[]", stats.extractedFiles().toString());
+        assertEquals(0, stats.failedExtractions());
+        assertEquals(0, stats.errorsNumber());
 
         tearDown();
     }
