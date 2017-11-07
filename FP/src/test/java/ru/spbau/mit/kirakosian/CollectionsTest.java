@@ -1,5 +1,6 @@
 package ru.spbau.mit.kirakosian;
 
+import org.jetbrains.annotations.NotNull;
 import org.junit.Test;
 import ru.spbau.mit.kirakosian.simple_functions.*;
 
@@ -271,6 +272,7 @@ public class CollectionsTest {
 
     private static class BaseToDerived extends Function1<Base, Derived> {
 
+        @NotNull
         @Override
         public Derived apply(final Base base) {
             return new Derived();
@@ -279,6 +281,7 @@ public class CollectionsTest {
 
     private static class DerivedToBase extends Function1<Derived, Base> {
 
+        @NotNull
         @Override
         public Base apply(final Derived derived) {
             return new Base();

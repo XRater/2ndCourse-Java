@@ -5,7 +5,7 @@ import org.jetbrains.annotations.NotNull;
 
 /**
  * The class supports simple operations with one argument function.
- *
+ * <p>
  * The class is abstract, thus you have to inherit from this class and overwrite "apply method".
  *
  * @param <V> type of the argument
