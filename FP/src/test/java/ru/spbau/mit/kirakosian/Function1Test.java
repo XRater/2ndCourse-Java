@@ -95,8 +95,8 @@ public class Function1Test {
 
     @SuppressWarnings("WeakerAccess")
     private static class Point {
-        int x;
-        int y;
+        final int x;
+        final int y;
 
         public Point(final int x, final int y) {
             this.x = x;

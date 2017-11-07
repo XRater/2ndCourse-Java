@@ -105,6 +105,7 @@ public final class Collections {
      * @return result of the list folding
      */
     // Seems that it is enough <R, ? super E, ? extends R> instead of <? super R, ? super E, ? extends R>
+    @SuppressWarnings("SpellCheckingInspection")
     public static <E, R> R foldl(@NotNull final Function2<R, ? super E, ? extends R> f, @NotNull final Collection<E> c, R ini) {
         for (final E e : c) {
             ini = f.apply(ini, e);
@@ -131,7 +132,8 @@ public final class Collections {
         return foldrRec(f, c.iterator(), ini);
     }
 
-    private static <E, R> R foldrRec(@NotNull final Function2<? super E, ? super R, ? extends R> f, @NotNull final Iterator<E> iter, final R acc) {
+    private static <E, R> R foldrRec(@NotNull final Function2<? super E, ? super R, ? extends R> f, @SuppressWarnings
+            ("SpellCheckingInspection") @NotNull final Iterator<E> iter, final R acc) {
         if (iter.hasNext())
             return f.apply(iter.next(), foldrRec(f, iter, acc));
         return acc;
