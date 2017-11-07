@@ -5,6 +5,9 @@ import ru.spbau.mit.kirakosian.simple_functions.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Test class for Predicate class.
+ */
 public class PredicateTest {
 
     @Test

@@ -5,6 +5,9 @@ import ru.spbau.mit.kirakosian.simple_functions.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Test class for Function2 class.
+ */
 public class Function2Test {
 
     @Test

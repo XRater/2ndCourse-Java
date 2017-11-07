@@ -7,6 +7,9 @@ import ru.spbau.mit.kirakosian.simple_functions.Negate;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Test class for Function1 class.
+ */
 public class Function1Test {
 
     @Test
