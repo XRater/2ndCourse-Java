@@ -1,22 +1,49 @@
 package ru.spbau.mit.kirakosian;
 
-public interface Function2<R, V, U> {
+import org.jetbrains.annotations.NotNull;
 
-    R apply(V v, U u);
+@SuppressWarnings("WeakerAccess")
+public abstract class Function2<V, U, R> {
 
-    default <T> Function2<T, V, U> compose(final Function1<T, ? super R> g) {
-        return (V v, U u) -> g.apply(apply(v, u));
+    public abstract R apply(V v, U u);
+
+    @NotNull
+    public final <T> Function2<V, U, T> compose(@NotNull final Function1<? super R, T> g) {
+        return new Function2<V, U, T>() {
+            @Override
+            public T apply(final V v, final U u) {
+                return g.apply(Function2.this.apply(v, u));
+            }
+        };
     }
 
-    default Function1<R, U> bind1(final V v) {
-        return (U u) -> apply(v, u);
+    @NotNull
+    public final Function1<U, R> bind1(final V v) {
+        return new Function1<U, R>() {
+            @Override
+            public R apply(final U u) {
+                return Function2.this.apply(v, u);
+            }
+        };
     }
 
-    default Function1<R, V> bind2(final U u) {
-        return (V v) -> apply(v, u);
+    @NotNull
+    public final Function1<V, R> bind2(final U u) {
+        return new Function1<V, R>() {
+            @Override
+            public R apply(final V v) {
+                return Function2.this.apply(v, u);
+            }
+        };
     }
 
-    default Function1<Function1<R, U>, V> curry() {
-        return this::bind1;
+    public final Function1<V, Function1<U, R>> curry() {
+        return new Function1<V, Function1<U, R>>() {
+            @NotNull
+            @Override
+            public Function1<U, R> apply(final V v) {
+                return bind1(v);
+            }
+        };
     }
 }

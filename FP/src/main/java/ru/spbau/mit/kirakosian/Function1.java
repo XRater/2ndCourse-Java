@@ -1,10 +1,18 @@
 package ru.spbau.mit.kirakosian;
 
-public interface Function1<R, V> {
+import org.jetbrains.annotations.NotNull;
 
-    R apply(V value);
+@SuppressWarnings("WeakerAccess")
+public abstract class Function1<V, R> {
 
-    default <T> Function1<T, V> compose(final Function1<T, ? super R> g) {
-        return (V value) -> g.apply(apply(value));
+    public abstract R apply(V v);
+
+    public final <T> Function1<V, T> compose(final Function1<? super R, T> g) {
+        return new Function1<V, T>() {
+            @Override
+            public T apply(final V v) {
+                return g.apply(Function1.this.apply(v));
+            }
+        };
     }
 }

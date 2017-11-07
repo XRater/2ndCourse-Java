@@ -3,6 +3,7 @@ package ru.spbau.mit.kirakosian;
 import org.junit.Test;
 import ru.spbau.mit.kirakosian.simple_functions.Const42;
 import ru.spbau.mit.kirakosian.simple_functions.Id;
+import ru.spbau.mit.kirakosian.simple_functions.Negate;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -10,7 +11,7 @@ public class Function1Test {
 
     @Test
     public void testApplyConst42() {
-        final Function1<Integer, Object> const42 = new Const42<>();
+        final Function1<Object, Integer> const42 = new Const42<>();
         assertEquals((Integer) 42, const42.apply(1));
         assertEquals((Integer) 42, const42.apply(new Object()));
         assertEquals((Integer) 42, const42.apply(42));
@@ -62,13 +63,31 @@ public class Function1Test {
         assertEquals(null, idId.apply(null));
     }
 
+    @SuppressWarnings("unused")
     @Test
     public void testComposeIdIdBaseDerived() {
         final Function1<Base, Base> idBase = new Id<>();
         final Function1<Derived, Derived> idDerived = new Id<>();
         final Function1<Derived, Derived> idCompDD = idDerived.compose(idDerived);
         final Function1<Base, Base> idCompBB = idBase.compose(idBase);
-        final Function1<Base, Derived> idCompBD = idDerived.compose(idBase);
+        final Function1<Derived, Base> idCompDB = idDerived.compose(idBase);
+    }
+
+    @Test
+    public void testComposeNegateIdNegate() {
+        final Negate neg = new Negate();
+        final Id<Integer> id = new Id<>();
+        final Function1<Integer, Integer> nin = neg.compose(id.compose(neg));
+        assertEquals((Integer) 1, nin.apply(1));
+    }
+
+    @SuppressWarnings("unchecked")
+    @Test
+    public void testComposeOrder() {
+        final Const42 const42 = new Const42();
+        final Negate neg = new Negate();
+        assertEquals(-42, const42.compose(neg).apply(1));
+        assertEquals(42, neg.compose(const42).apply(1));
     }
 
     @SuppressWarnings("WeakerAccess")
