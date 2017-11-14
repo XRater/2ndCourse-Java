@@ -1,9 +1,12 @@
+import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 
-@SuppressWarnings("WeakerAccess")
+@SuppressWarnings({"WeakerAccess", "unused"})
 public class MyTreeSetImp<E> extends AbstractSet<E> implements MyTreeSet<E> {
+    @Nullable
     private final Node root = new Node(null);
 
     private int size;
@@ -16,8 +19,8 @@ public class MyTreeSetImp<E> extends AbstractSet<E> implements MyTreeSet<E> {
         cmp = (o1, o2) -> {
             try {
                 //noinspection unchecked
-                return ((Comparable<E>) o1).compareTo((E) o2);
-            } catch (final ClassCastException e) {
+                return ((Comparable<E>) o1).compareTo(o2);
+            } catch (@NotNull final ClassCastException e) {
                 throw new IllegalArgumentException();
             }
         };
@@ -38,6 +41,7 @@ public class MyTreeSetImp<E> extends AbstractSet<E> implements MyTreeSet<E> {
      *
      * @return new set with descending order of elements.
      */
+    @NotNull
     @Override
     public MyTreeSet<E> descendingSet() {
         return new ReversedSet(this);
@@ -48,6 +52,7 @@ public class MyTreeSetImp<E> extends AbstractSet<E> implements MyTreeSet<E> {
      *
      * @return new descending iterator.
      */
+    @NotNull
     @Override
     public Iterator<E> descendingIterator() {
         return new DescendingTreeIterator();
@@ -70,6 +75,7 @@ public class MyTreeSetImp<E> extends AbstractSet<E> implements MyTreeSet<E> {
         if (isEmpty()) {
             throw new NoSuchElementException();
         }
+        assert root != null;
         return root.min().value;
     }
 
@@ -81,6 +87,7 @@ public class MyTreeSetImp<E> extends AbstractSet<E> implements MyTreeSet<E> {
         if (isEmpty()) {
             throw new NoSuchElementException();
         }
+        assert root != null;
         return root.max().value;
     }
 
@@ -88,9 +95,11 @@ public class MyTreeSetImp<E> extends AbstractSet<E> implements MyTreeSet<E> {
      * Returns the greatest element in this set less than or equal to the given element, or null if there is no such element.
      * @param e the value to match
      */
+    @Nullable
     @Override
     public E lower(final E e) {
         Node curr = root;
+        assert curr != null;
         while (!curr.isLeaf()) {
             if (cmp.compare(e, curr.value) > 0) {
                 if (curr.r.isLeaf()) {
@@ -116,9 +125,11 @@ public class MyTreeSetImp<E> extends AbstractSet<E> implements MyTreeSet<E> {
      * Returns the greatest element in this set strictly less than the given element, or null if there is no such element.
      * @param e the value to match
      */
+    @Nullable
     @Override
     public E floor(final E e) {
         Node curr = root;
+        assert curr != null;
         while (!curr.isLeaf()) {
             if (cmp.compare(e, curr.value) > 0) {
                 if (curr.r.isLeaf()) {
@@ -146,9 +157,11 @@ public class MyTreeSetImp<E> extends AbstractSet<E> implements MyTreeSet<E> {
      * Returns the least element in this set greater than or equal to the given element, or null if there is no such element.
      * @param e the value to match
      */
+    @Nullable
     @Override
     public E ceiling(final E e) {
         Node curr = root;
+        assert curr != null;
         while (!curr.isLeaf()) {
             if (cmp.compare(e, curr.value) < 0) {
                 if (curr.l.isLeaf()) {
@@ -176,9 +189,11 @@ public class MyTreeSetImp<E> extends AbstractSet<E> implements MyTreeSet<E> {
      * Returns the least element in this set strictly greater than the given element, or null if there is no such element.
      * @param e the value to match
      */
+    @Nullable
     @Override
     public E higher(final E e) {
         Node curr = root;
+        assert curr != null;
         while (!curr.isLeaf()) {
             if (cmp.compare(e, curr.value) < 0) {
                 if (curr.l.isLeaf()) {
@@ -252,6 +267,7 @@ public class MyTreeSetImp<E> extends AbstractSet<E> implements MyTreeSet<E> {
     @NotNull
     private Node findNode(@NotNull final E value) {
         Node curr = root;
+        assert curr != null;
         while (!curr.isLeaf()) {
             if (cmp.compare(value, curr.value) == 0) {
                 return curr;
@@ -264,12 +280,14 @@ public class MyTreeSetImp<E> extends AbstractSet<E> implements MyTreeSet<E> {
     /**
      * Returns string representation of the Tree
      */
+    @NotNull
     @Override
     public String toString() {
+        assert root != null;
         return stringValue(root);
     }
 
-    private String stringValue(final Node root) {
+    private String stringValue(@NotNull final Node root) {
         if (root.value == null) {
             return "null";
         }
@@ -277,9 +295,10 @@ public class MyTreeSetImp<E> extends AbstractSet<E> implements MyTreeSet<E> {
     }
 
     private class AscendingIterator implements Iterator<E> {
-        Node node = root;
+        @Nullable Node node = root;
 
         private AscendingIterator() {
+            assert root != null;
             node = root.min();
         }
 
@@ -301,9 +320,10 @@ public class MyTreeSetImp<E> extends AbstractSet<E> implements MyTreeSet<E> {
 
     private class DescendingTreeIterator implements Iterator<E> {
 
-        Node node = root;
+        @Nullable Node node = root;
 
         private DescendingTreeIterator() {
+            assert root != null;
             node = root.max();
         }
 
@@ -330,6 +350,7 @@ public class MyTreeSetImp<E> extends AbstractSet<E> implements MyTreeSet<E> {
             origin = set;
         }
 
+        @NotNull
         @Override
         public Iterator<E> descendingIterator() {
             return origin.iterator();
@@ -350,21 +371,25 @@ public class MyTreeSetImp<E> extends AbstractSet<E> implements MyTreeSet<E> {
             return origin.first();
         }
 
+        @Nullable
         @Override
         public E lower(final E e) {
             return origin.higher(e);
         }
 
+        @Nullable
         @Override
         public E floor(final E e) {
             return origin.ceiling(e);
         }
 
+        @Nullable
         @Override
         public E ceiling(final E e) {
             return origin.floor(e);
         }
 
+        @Nullable
         @Override
         public E higher(final E e) {
             return origin.lower(e);
@@ -441,6 +466,7 @@ public class MyTreeSetImp<E> extends AbstractSet<E> implements MyTreeSet<E> {
             return curr.p;
         }
 
+        @NotNull
         private Node min() {
             Node curr = this;
             while (!curr.l.isLeaf()) {
@@ -449,6 +475,7 @@ public class MyTreeSetImp<E> extends AbstractSet<E> implements MyTreeSet<E> {
             return curr;
         }
 
+        @NotNull
         private Node max() {
             Node curr = this;
             while (!curr.r.isLeaf()) {

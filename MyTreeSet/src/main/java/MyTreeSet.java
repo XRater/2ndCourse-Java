@@ -1,3 +1,6 @@
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import java.util.Iterator;
 import java.util.Set;
 import java.util.TreeSet;
@@ -5,7 +8,7 @@ import java.util.TreeSet;
 public interface MyTreeSet<E> extends Set<E> {
 
     /** {@link TreeSet#descendingIterator()} **/
-    Iterator<E> descendingIterator();
+    @NotNull Iterator<E> descendingIterator();
 
     /** {@link TreeSet#descendingSet()} **/
     MyTreeSet<E> descendingSet();
@@ -19,15 +22,15 @@ public interface MyTreeSet<E> extends Set<E> {
 
 
     /** {@link TreeSet#lower(E)} **/
-    E lower(E e);
+    @Nullable E lower(E e);
 
     /** {@link TreeSet#floor(E)} **/
-    E floor(E e);
+    @Nullable E floor(E e);
 
 
     /** {@link TreeSet#ceiling(E)} **/
-    E ceiling(E e);
+    @Nullable E ceiling(E e);
 
     /** {@link TreeSet#higher(E)} **/
-    E higher(E e);
+    @Nullable E higher(E e);
 }
