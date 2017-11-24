@@ -6,6 +6,7 @@ import java.util.Deque;
  * the end of the collection.
  * @param <T> type of the stored value.
  */
+@SuppressWarnings("WeakerAccess")
 public class Stack<T> {
 
     private final Deque<T> deque = new ArrayDeque<>();
