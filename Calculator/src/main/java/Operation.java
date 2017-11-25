@@ -1,13 +1,25 @@
-public class Operation extends Symbol {
+import org.jetbrains.annotations.NotNull;
 
+import java.util.function.BinaryOperator;
+import java.util.function.Function;
+
+public class Operation implements BinaryOperator<Integer>, Comparable<Operation> {
+
+    private final BinaryOperator<Integer> op;
     private final int priority;
 
-    public Operation(final char op, final int priority) {
-        super(op);
+    public Operation(final BinaryOperator<Integer> op, final int priority) {
         this.priority = priority;
+        this.op = op;
     }
 
-    public int getPriority() {
-        return priority;
+    @Override
+    public Integer apply(final Integer a, final Integer b) {
+        return op.apply(a, b);
+    }
+
+    @Override
+    public int compareTo(@NotNull final Operation o) {
+        return priority - o.priority;
     }
 }

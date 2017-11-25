@@ -1,68 +1,33 @@
-import java.util.Arrays;
-import java.util.List;
-
+@SuppressWarnings("WeakerAccess")
 public class Calculator {
 
+    private final Stack<Integer> stack;
+
+    public Calculator(final Stack<Integer> stack) {
+        this.stack = stack;
+    }
+
     public int evaluate(final String eq) {
-        final String poland = makePoland(eq);
-        System.out.println(poland);
-        return 0;
-//        return calculateFromPolandForm(poland);
-    }
-
-    private int calculateFromPolandForm(final Stack<Character> poland) {
-        return 0;
-    }
-
-    private String makePoland(final String eq) {
-        final StringBuilder sb = new StringBuilder();
-        final Stack<Character> operations = new Stack<>();
-        for (final char c : eq.toCharArray()) {
-            if (c == ' ') {
+        clear();
+        final EquationParser parser = new EquationParser(eq);
+        while (!parser.isEmpty()) {
+            final String symbol = parser.getNext();
+            final Integer number = parser.getNumber(symbol);
+            if (number != null) {
+                stack.push(number);
+            } else if (symbol.equals(" ")) {
+                //noinspection UnnecessaryContinue
                 continue;
-            } if (Character.isDigit(c)) {
-                sb.append(c).append(' ');
-            } else if (isOperation(c)) {
-                pushToStack(sb, operations, c);
             } else {
-                throw new UnknownSymbolException(Character.toString(c));
+                final int a = stack.pop();
+                final int b = stack.pop();
+                stack.push(EquationParser.OPERATORS.get(symbol).apply(b, a));
             }
         }
-        while (!operations.isEmpty()) {
-            sb.append(operations.pop()).append(' ');
-        }
-        return sb.toString();
+        return stack.top();
     }
 
-    private void pushToStack(final StringBuilder sb, final Stack<Character> operations, final char op) {
-        final int priority = getPriority(op);
-        while (!operations.isEmpty() && priority <= getPriority(operations.top())) {
-            final char lastOp = operations.pop();
-            sb.append(lastOp).append(' ');
-        }
-        operations.push(op);
+    private void clear() {
+        stack.clear();
     }
-
-    private int getPriority(final char op) {
-        switch (op) {
-            case '+':
-                return 1;
-            case '-':
-                return 1;
-            case '*':
-                return 2;
-            default:
-                throw new UnsupportedOperationException("op");
-        }
-    }
-
-//    public static void main(String[] args) {
-//        Calculator calculator = new Calculator();
-//        calculator.evaluate("1 + 2");
-//        calculator.evaluate("1*1 + 2*3 + 5");
-//        calculator.evaluate("1 + 4 + 2");
-//        calculator.evaluate("1 + 2 * 3");
-//        System.out.println(Character.isDigit('1'));
-//    }
-
 }

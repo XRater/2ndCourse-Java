@@ -1,23 +1,16 @@
-import java.util.ArrayDeque;
-import java.util.Deque;
-
 /**
  * A linear storage that supports element insertion and removal at
  * the end of the collection.
  * @param <T> type of the stored value.
  */
-@SuppressWarnings("WeakerAccess")
-public class Stack<T> {
+public interface Stack<T> {
 
-    private final Deque<T> deque = new ArrayDeque<>();
 
     /**
-     * Checks if stack is empty.
-     * @return true if stack is empty and false otherwise.
+     * Checks if stack is isEmpty.
+     * @return true if stack is isEmpty and false otherwise.
      */
-    public boolean isEmpty() {
-        return deque.isEmpty();
-    }
+    boolean isEmpty();
 
     /**
      * The method inserts element to the end of the stack.
@@ -25,16 +18,16 @@ public class Stack<T> {
      * Element must be not null. If it is not, NullPointerException will be thrown.
      * @param t value to insert.
      */
-    public void push(final T t) {
-        deque.addLast(t);
-    }
+    void push(T t);
 
     /**
      * Returns value of the top element of the stack.
+     * <p>
+     * Throws NoSuchElement exception if stack was isEmpty.
+     *
+     * @return top element of the stack.
      */
-    public T top() {
-        return deque.getLast();
-    }
+    T top();
 
     /**
      * The method removes element from the end of the stack.
@@ -42,7 +35,10 @@ public class Stack<T> {
      * If extracted value was equal to null, NullPointerException will be thrown.
      * @return value of removed element.
      */
-    public T pop() {
-        return deque.removeLast();
-    }
+    T pop();
+
+    /**
+     * Clears the stack.
+     */
+    void clear();
 }
