@@ -7,8 +7,8 @@ public interface Stack<T> {
 
 
     /**
-     * Checks if stack is isEmpty.
-     * @return true if stack is isEmpty and false otherwise.
+     * Checks if stack is hasNext.
+     * @return true if stack is hasNext and false otherwise.
      */
     boolean isEmpty();
 
@@ -23,7 +23,7 @@ public interface Stack<T> {
     /**
      * Returns value of the top element of the stack.
      * <p>
-     * Throws NoSuchElement exception if stack was isEmpty.
+     * Throws NoSuchElement exception if stack was hasNext.
      *
      * @return top element of the stack.
      */

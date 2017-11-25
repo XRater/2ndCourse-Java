@@ -3,12 +3,12 @@ import org.jetbrains.annotations.NotNull;
 import java.util.function.BinaryOperator;
 import java.util.function.Function;
 
-public class Operation implements BinaryOperator<Integer>, Comparable<Operation> {
+class Operation implements BinaryOperator<Integer>, Comparable<Operation> {
 
     private final BinaryOperator<Integer> op;
     private final int priority;
 
-    public Operation(final BinaryOperator<Integer> op, final int priority) {
+    Operation(final BinaryOperator<Integer> op, final int priority) {
         this.priority = priority;
         this.op = op;
     }

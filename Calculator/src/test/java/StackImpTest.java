@@ -6,6 +6,9 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
+/**
+ * Test class for stack implementation class.
+ */
 public class StackImpTest {
 
     @Test
