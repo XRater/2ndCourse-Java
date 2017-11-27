@@ -5,6 +5,9 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.junit.MatcherAssert.assertThat;
 import static org.mockito.Mockito.*;
 
+/**
+ * Test class for Calculator.
+ */
 @SuppressWarnings("unchecked")
 public class CalculatorTest {
 
@@ -82,4 +85,5 @@ public class CalculatorTest {
         assertThat(calculator.evaluate("1 2 3 - -"), is(2));
         assertThat(calculator.evaluate("1 2 + 3 4 - *"), is(-3));
     }
+
 }

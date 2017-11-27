@@ -3,6 +3,8 @@ import java.util.Queue;
 
 /**
  * This class parses given equation. It consequently extracts numbers/operations from the equation.
+ *
+ * This class skips brackets. All brackets symbols are taken from Options.BRACKETS field.
  */
 class EquationParser {
 
@@ -22,6 +24,8 @@ class EquationParser {
     /**
      * Returns next number or operation (including brackets). Spaces will be dropped.
      *
+     * This class never throws ParseException.
+     *
      * @return next equation element.
      */
     String getNext() {
@@ -32,7 +36,7 @@ class EquationParser {
         }
         final StringBuilder sb = new StringBuilder();
         sb.append(c);
-        while (!queue.isEmpty() && !isBracket(queue.element())) {
+        while (!queue.isEmpty() && !isBracket(queue.element()) && queue.element() != ' ') {
             sb.append(queue.remove());
         }
         return sb.toString();
@@ -45,7 +49,7 @@ class EquationParser {
      */
     boolean hasNext() {
         removeSpaces();
-        return queue.isEmpty();
+        return !queue.isEmpty();
     }
 
     /**
@@ -73,8 +77,8 @@ class EquationParser {
      * @return true if the symbol is bracket and false otherwise.
      */
     private boolean isBracket(final char c) {
-        return Calculator.BRACKETS.containsValue(Character.toString(c)) ||
-                Calculator.BRACKETS.containsKey(Character.toString(c));
+        return Options.BRACKETS.containsValue(Character.toString(c)) ||
+                Options.BRACKETS.containsKey(Character.toString(c));
     }
 
     /**

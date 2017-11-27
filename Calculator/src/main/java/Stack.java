@@ -3,6 +3,7 @@
  * the end of the collection.
  * @param <T> type of the stored value.
  */
+@SuppressWarnings("WeakerAccess")
 public interface Stack<T> {
 
 
@@ -23,8 +24,8 @@ public interface Stack<T> {
     /**
      * Returns value of the top element of the stack.
      * <p>
-     * Throws NoSuchElement exception if stack was hasNext.
-     *
+     * If there stack was empty NoSuchElementException will be thrown.
+     * @throws java.util.NoSuchElementException if the stack was empty.
      * @return top element of the stack.
      */
     T top();
@@ -32,7 +33,8 @@ public interface Stack<T> {
     /**
      * The method removes element from the end of the stack.
      * <p>
-     * If extracted value was equal to null, NullPointerException will be thrown.
+     * If there stack was empty NoSuchElementException will be thrown.
+     * @throws java.util.NoSuchElementException if the stack was empty.
      * @return value of removed element.
      */
     T pop();
