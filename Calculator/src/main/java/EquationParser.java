@@ -1,3 +1,6 @@
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -15,7 +18,7 @@ class EquationParser {
      *
      * @param eq equation to parse.
      */
-    EquationParser(final String eq) {
+    EquationParser(@NotNull final String eq) {
         for (final char c : eq.toCharArray()) {
             queue.add(c);
         }
@@ -26,9 +29,11 @@ class EquationParser {
      *
      * This class never throws ParseException.
      *
+     * If there is no next element NoSuchElementException will be thrown.
+     *
      * @return next equation element.
      */
-    String getNext() {
+    @NotNull String getNext() {
         removeSpaces();
         final char c = queue.remove();
         if (isBracket(c)) {
@@ -60,10 +65,10 @@ class EquationParser {
      * @param symbol string to parse
      * @return Integer with string value or null if parse was not successful.
      */
-    Integer getNumber(final String symbol) {
+    @Nullable Integer getNumber(@NotNull final String symbol) {
         try {
             return Integer.parseInt(symbol);
-        } catch (final NumberFormatException e) {
+        } catch (@NotNull final NumberFormatException e) {
             return null;
         }
     }

@@ -1,3 +1,5 @@
+import org.jetbrains.annotations.NotNull;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.NoSuchElementException;
@@ -50,7 +52,7 @@ public class Calculator {
                     final int a = stack.pop();
                     final int b = stack.pop();
                     stack.push(Options.OPERATORS.get(symbol).apply(b, a));
-                } catch (final NoSuchElementException e) {
+                } catch (@NotNull final NoSuchElementException e) {
                     throw new IllegalArgumentException();
                 }
             }

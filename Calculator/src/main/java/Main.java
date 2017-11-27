@@ -1,3 +1,5 @@
+import org.jetbrains.annotations.NotNull;
+
 /**
  * This console utility calculates the value of given math equation. Supported brackets and operations
  * might be customized in Options class.
@@ -10,7 +12,7 @@ public class Main {
      *
      * @param args equation to evaluate.
      */
-    public static void main(final String[] args) {
+    public static void main(@NotNull final String[] args) {
         if (args.length != 1) {
             System.out.println("Usage: <equation>");
         }
@@ -24,7 +26,7 @@ public class Main {
         try {
             final String poland = converterToPostfixNotation.makePoland(args[0]);
             System.out.println(calculator.evaluate(poland));
-        } catch (final IllegalArgumentException e) {
+        } catch (@NotNull final IllegalArgumentException e) {
             System.out.println("Parse error.");
         }
     }

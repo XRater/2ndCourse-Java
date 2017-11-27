@@ -1,3 +1,5 @@
+import org.jetbrains.annotations.NotNull;
+
 /**
  * This class converts equation to postfix notation.
  * <p>
@@ -28,7 +30,8 @@ public class ConverterToPostfixNotation {
      * @param eq equation to convert.
      * @return string representation of result equation.
      */
-    public String makePoland(final String eq) {
+    @NotNull
+    public String makePoland(@NotNull final String eq) {
         clear();
         final StringBuilder sb = new StringBuilder();
         final EquationParser parser = new EquationParser(eq);
