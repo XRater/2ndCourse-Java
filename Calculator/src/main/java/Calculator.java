@@ -1,7 +1,5 @@
 import org.jetbrains.annotations.NotNull;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.NoSuchElementException;
 
 /**
@@ -36,17 +34,17 @@ public class Calculator {
      * @throws IllegalArgumentException if input equation was not valid.
      * @return result of evaluation.
      */
-    public int evaluate(final String eq) {
+    public int evaluate(@NotNull final String eq) {
         clear();
         final EquationParser parser = new EquationParser(eq);
+        if (eq.length() == 0) {
+            return 0;
+        }
         while (parser.hasNext()) {
             final String symbol = parser.getNext();
             final Integer number = parser.getNumber(symbol);
             if (number != null) {
                 stack.push(number);
-            } else if (symbol.equals(" ")) {
-//                noinspection UnnecessaryContinue
-                continue;
             } else {
                 try {
                     final int a = stack.pop();
@@ -57,7 +55,11 @@ public class Calculator {
                 }
             }
         }
-        return stack.top();
+        final int result = stack.pop();
+        if (!stack.isEmpty()) {
+            throw new IllegalArgumentException();
+        }
+        return result;
     }
 
     private void clear() {

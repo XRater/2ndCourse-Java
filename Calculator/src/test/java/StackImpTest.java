@@ -67,4 +67,17 @@ public class StackImpTest {
         stack.pop();
         assertThat(stack.isEmpty(), is(true));
     }
+
+    @Test
+    public void testClear() {
+        final Stack<String> stack = new StackImp<>();
+        assertThat(stack.isEmpty(), is(true));
+        stack.clear();
+        assertThat(stack.isEmpty(), is(true));
+        stack.push("one");
+        stack.push("two");
+        stack.push("null");
+        stack.clear();
+        assertThat(stack.isEmpty(), is(true));
+    }
 }

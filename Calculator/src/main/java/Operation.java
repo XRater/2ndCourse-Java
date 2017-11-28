@@ -1,7 +1,6 @@
 import org.jetbrains.annotations.NotNull;
 
 import java.util.function.BinaryOperator;
-import java.util.function.Function;
 
 /**
  * Binary operation class. Represents two-argument function, but also has priority.

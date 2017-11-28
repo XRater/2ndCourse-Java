@@ -24,7 +24,7 @@ public class Main {
         final Calculator calculator = new Calculator(integerStack);
 
         try {
-            final String poland = converterToPostfixNotation.makePoland(args[0]);
+            final String poland = converterToPostfixNotation.convertToPostfix("(1 + 2)");
             System.out.println(calculator.evaluate(poland));
         } catch (@NotNull final IllegalArgumentException e) {
             System.out.println("Parse error.");

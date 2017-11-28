@@ -1,5 +1,7 @@
 import org.jetbrains.annotations.NotNull;
 
+import java.util.NoSuchElementException;
+
 /**
  * This class converts equation to postfix notation.
  * <p>
@@ -28,10 +30,11 @@ public class ConverterToPostfixNotation {
      * equation was not. Additionally, this method does not check correctness of input equation.
      *
      * @param eq equation to convert.
+     * @throws ParseException if there was an error while parsing.
      * @return string representation of result equation.
      */
     @NotNull
-    public String makePoland(@NotNull final String eq) {
+    public String convertToPostfix(@NotNull final String eq) {
         clear();
         final StringBuilder sb = new StringBuilder();
         final EquationParser parser = new EquationParser(eq);
@@ -44,9 +47,13 @@ public class ConverterToPostfixNotation {
             } else if (Options.BRACKETS.containsValue(symbol)) {
                 operations.push(symbol);
             } else if (Options.BRACKETS.containsKey(symbol)) {
-                while (!operations.isEmpty() &&
-                        !operations.top().equals(Options.BRACKETS.get(symbol))) {
-                    sb.append(operations.pop()).append(' ');
+                try {
+                    while (!operations.top().equals(Options.BRACKETS.get(symbol))) {
+//                        System.err.println(symbol);
+                        sb.append(operations.pop()).append(' ');
+                    }
+                } catch (@NotNull final NoSuchElementException e) {
+                    throw new ParseException("No pair bor bracket " + symbol);
                 }
                 operations.pop();
             } else if (Options.OPERATORS.containsKey(symbol)) {
@@ -55,16 +62,17 @@ public class ConverterToPostfixNotation {
                     sb.append(operations.pop()).append(' ');
                 }
                 operations.push(symbol);
-            } else if (symbol.equals(" ")) {
-                //noinspection UnnecessaryContinue
-                continue;
             } else {
                 throw new ParseException(symbol);
             }
         }
 
         while (!operations.isEmpty()) {
-            sb.append(operations.pop()).append(' ');
+            final String symbol = operations.pop();
+            if (Options.BRACKETS.containsValue(symbol)) {
+                throw new ParseException("End of the the string, but some brackets are not closed.");
+            }
+            sb.append(symbol).append(' ');
         }
         return sb.toString();
     }
