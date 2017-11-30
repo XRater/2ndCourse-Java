@@ -8,7 +8,7 @@ import java.util.NoSuchElementException;
  * Class takes operations and brackets information from Options class.
  */
 @SuppressWarnings("WeakerAccess")
-public class ConverterToPostfixNotation {
+class ConverterToPostfixNotation {
 
     private final Stack<String> operations;
 
@@ -34,7 +34,7 @@ public class ConverterToPostfixNotation {
      * @return string representation of result equation.
      */
     @NotNull
-    public String convertToPostfix(@NotNull final String eq) {
+    String convertToPostfix(@NotNull final String eq) {
         clear();
         final StringBuilder sb = new StringBuilder();
         final EquationParser parser = new EquationParser(eq);
@@ -49,7 +49,6 @@ public class ConverterToPostfixNotation {
             } else if (Options.BRACKETS.containsKey(symbol)) {
                 try {
                     while (!operations.top().equals(Options.BRACKETS.get(symbol))) {
-//                        System.err.println(symbol);
                         sb.append(operations.pop()).append(' ');
                     }
                 } catch (@NotNull final NoSuchElementException e) {
