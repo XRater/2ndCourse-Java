@@ -9,7 +9,6 @@ public class SetTest {
 
     @Test
     public void testSizeOrdered() {
-        assertTrue(false);
         checkSizeSet(new Integer[]{});
         checkSizeSet(new Integer[]{1, 2, 3, 4, 5, 6});
         checkSizeSet(new Integer[]{-1, -2, -3, -4, -5, -6});
