@@ -1,12 +1,14 @@
+package ru.spbau.mit.kirakosian;
+
 import org.jetbrains.annotations.NotNull;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.*;
 
-class SetTest {
+public class SetTest {
 
     @Test
-    void testSizeOrdered() {
+    public void testSizeOrdered() {
         checkSizeSet(new Integer[]{});
         checkSizeSet(new Integer[]{1, 2, 3, 4, 5, 6});
         checkSizeSet(new Integer[]{-1, -2, -3, -4, -5, -6});
@@ -16,7 +18,7 @@ class SetTest {
     }
 
     @Test
-    void testAddContains() {
+    public void testAddContains() {
         checkAddSet(new Integer[]{});
         checkAddSet(new Integer[]{1, 2, 3, 4, 5, 6});
         checkAddSet(new Integer[]{-1, -2, -3, -4, -5, -6});

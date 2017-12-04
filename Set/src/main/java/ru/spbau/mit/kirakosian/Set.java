@@ -1,3 +1,5 @@
+package ru.spbau.mit.kirakosian;
+
 import org.jetbrains.annotations.NotNull;
 
 /**
