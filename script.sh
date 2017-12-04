@@ -16,8 +16,12 @@ do
         then
             echo "$FILE"
             cd "$FILE"
-            gradle build
-            cd ../
+            if gradle build
+            then
+                cd ../
+            else 
+                exit 1
+            fi
         fi
     fi
 done
