@@ -1,8 +1,8 @@
 language: java
 jdk:
-  - oraclejdk8
+  - oraclejdk9
 os:
   - linux
 script:
   - chmod +x script.sh
-  - ./script.sh
+  - ./script.sh    
