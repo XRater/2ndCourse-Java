@@ -76,7 +76,7 @@ class FirstPartTasksTest {
                 Collections.emptyMap(),
                 groupByArtist(Stream.of()));
     }
-/*
+
     @Test
     void testGroupByArtistMapName() {
         assertEquals(
@@ -170,7 +170,7 @@ class FirstPartTasksTest {
                 Arrays.asList("", 1, 2.0, "cde"),
                 filterIsInstance(Stream.of("", 1, 2.0, "cde"), Object.class).collect(Collectors.toList()));
     }
-*/
+
     private static final Artist ARTIST_0 = new Artist("Morcheeba");
     private static final Artist ARTIST_1 = new Artist("Temples");
     private static final Artist ARTIST_2 = new Artist("God Help the Girl");

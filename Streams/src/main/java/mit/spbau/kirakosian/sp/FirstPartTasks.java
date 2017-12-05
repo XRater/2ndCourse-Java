@@ -1,9 +1,12 @@
 package mit.spbau.kirakosian.sp;
 
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.lang.reflect.Constructor;
+import java.util.*;
+import java.util.function.BiConsumer;
+import java.util.function.BinaryOperator;
+import java.util.function.Function;
+import java.util.function.Supplier;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -44,40 +47,57 @@ public final class FirstPartTasks {
 
     // Сгруппировать альбомы по артистам (в качестве значения вместо объекта 'Artist' использовать его имя)
     public static Map<Artist, List<String>> groupByArtistMapName(final Stream<Album> albums) {
-//        return albums.collect(Collectors.groupingBy());
-        return null;
+        return albums.collect(Collectors.toMap(
+                Album::getArtist,
+                (a) -> {
+                    final List<String> l = new ArrayList<>();
+                    l.add(a.getName());
+                    return l;
+                    },
+                (l1, l2) -> {
+                    l1.addAll(l2);
+                    return l1;
+                }));
     }
 
     // Число повторяющихся альбомов в потоке
     public static long countAlbumDuplicates(final Stream<Album> albums) {
-        throw new UnsupportedOperationException();
+        return albums.collect(Collectors.groupingBy(
+                Function.identity()))
+                .values().stream().filter(s -> s.size() > 1).count();
     }
 
     // Альбом, в котором максимум рейтинга минимален
     // (если в альбоме нет ни одного трека, считать, что максимум рейтинга в нем --- 0)
     public static Optional<Album> minMaxRating(final Stream<Album> albums) {
-        throw new UnsupportedOperationException();
+        return albums.min(Comparator.comparing(
+                a -> a.getTracks().stream().map(Track::getRating)
+                .max(Comparator.naturalOrder()).orElse(0)
+        ));
     }
 
     // Список альбомов, отсортированный по убыванию среднего рейтинга его треков (0, если треков нет)
     public static List<Album> sortByAverageRating(final Stream<Album> albums) {
-        throw new UnsupportedOperationException();
+        return albums.sorted(Comparator.comparing(
+                a -> -a.getTracks().stream()
+                .collect(Collectors.averagingInt(Track::getRating))
+        )).collect(Collectors.toList());
     }
 
     // Произведение всех чисел потока по модулю 'modulo'
     // (все числа от 0 до 10000)
     public static int moduloProduction(final IntStream stream, final int modulo) {
-        throw new UnsupportedOperationException();
+        return stream.reduce(1, (a, b) -> (a * b) % modulo);
     }
 
     // Вернуть строку, состояющую из конкатенаций переданного массива, и окруженную строками "<", ">"
     // см. тесты
     public static String joinTo(final String... strings) {
-        throw new UnsupportedOperationException();
+        return Arrays.stream(strings).collect(Collectors.joining(", ", "<", ">"));
     }
 
     // Вернуть поток из объектов класса 'clazz'
     public static <R> Stream<R> filterIsInstance(final Stream<?> s, final Class<R> clazz) {
-        throw new UnsupportedOperationException();
+        return s.filter(clazz::isInstance).map(clazz::cast);
     }
 }
