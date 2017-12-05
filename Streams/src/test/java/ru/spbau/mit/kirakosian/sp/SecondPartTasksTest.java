@@ -1,4 +1,4 @@
-package mit.spbau.kirakosian.sp;
+package ru.spbau.mit.kirakosian.sp;
 
 import com.google.common.collect.ImmutableMap;
 import org.jetbrains.annotations.NotNull;
