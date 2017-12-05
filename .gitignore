@@ -71,6 +71,5 @@ fabric.properties
 
 !gradle-wrapper.jar
 
-
 .idea/
 .gradle/
