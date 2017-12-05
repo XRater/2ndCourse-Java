@@ -4,25 +4,25 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class SecondPartTasksTest {
+class SecondPartTasksTest {
 
     @Test
-    public void testFindQuotes() {
+    void testFindQuotes() {
 //        fail();
     }
 
     @Test
-    public void testPiDividedBy4() {
+    void testPiDividedBy4() {
 //        fail();
     }
 
     @Test
-    public void testFindPrinter() {
+    void testFindPrinter() {
 //        fail();
     }
 
     @Test
-    public void testCalculateGlobalOrder() {
+    void testCalculateGlobalOrder() {
 //        fail();
     }
 }

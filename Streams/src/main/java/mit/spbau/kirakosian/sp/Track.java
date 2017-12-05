@@ -1,11 +1,12 @@
 package mit.spbau.kirakosian.sp;
 
+@SuppressWarnings("WeakerAccess")
 public class Track {
 
     private final String name;
     private final int rating;
 
-    public Track(String name, int rating) {
+    public Track(final String name, final int rating) {
         this.name = name;
         this.rating = rating;
     }
