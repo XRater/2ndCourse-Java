@@ -1,5 +1,7 @@
 package mit.spbau.kirakosian.sp;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -7,6 +9,7 @@ import java.util.List;
 public class Album {
 
     private final String name;
+    @NotNull
     private final List<Track> tracks;
     private final Artist artist;
 
@@ -20,6 +23,7 @@ public class Album {
         return name;
     }
 
+    @NotNull
     public List<Track> getTracks() {
         return tracks;
     }

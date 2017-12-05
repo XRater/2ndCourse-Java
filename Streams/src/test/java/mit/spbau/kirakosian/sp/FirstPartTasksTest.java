@@ -13,6 +13,7 @@ import java.util.stream.Stream;
 import static mit.spbau.kirakosian.sp.FirstPartTasks.*;
 import static org.junit.jupiter.api.Assertions.*;
 
+@SuppressWarnings("SpellCheckingInspection")
 class FirstPartTasksTest {
 
     @Test

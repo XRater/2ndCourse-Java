@@ -15,6 +15,7 @@ import static org.hamcrest.Matchers.*;
 import static org.hamcrest.junit.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
+@SuppressWarnings("SpellCheckingInspection")
 class SecondPartTasksTest {
 
     private final String sourceDir = "./resources";
@@ -63,7 +64,6 @@ class SecondPartTasksTest {
 
         deleteFile(sourceDir);
     }
-
 
     @Test
     void testPiDividedBy4() {
@@ -133,7 +133,7 @@ class SecondPartTasksTest {
     }
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
-    private void createFile(final String name, final String... lines) throws IOException {
+    private void createFile(final String name, @NotNull final String... lines) throws IOException {
         final File file = new File(getFileName(name));
         new File(file.getParent()).mkdirs();
         file.createNewFile();

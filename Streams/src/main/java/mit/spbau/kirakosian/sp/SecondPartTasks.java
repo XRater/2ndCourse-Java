@@ -1,11 +1,11 @@
 package mit.spbau.kirakosian.sp;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -15,7 +15,7 @@ public final class SecondPartTasks {
     private SecondPartTasks() {}
 
     // Найти строки из переданных файлов, в которых встречается указанная подстрока.
-    public static List<String> findQuotes(final List<String> paths, final CharSequence sequence) {
+    public static List<String> findQuotes(@NotNull final List<String> paths, @NotNull final CharSequence sequence) {
         return paths.stream().flatMap((path) -> {
             try {
                 return Files.lines(Paths.get(path));
@@ -42,16 +42,15 @@ public final class SecondPartTasks {
 
     // Дано отображение из имени автора в список с содержанием его произведений.
     // Надо вычислить, чья общая длина произведений наибольшая.
-    public static String findPrinter(final Map<String, List<String>> compositions) {
-        final Optional<Map.Entry<String, List<String>>> answer = compositions.entrySet().stream().max(Comparator.comparing(
+    public static String findPrinter(@NotNull final Map<String, List<String>> compositions) {
+        return compositions.entrySet().stream().max(Comparator.comparing(
                 (p) -> p.getValue().stream().collect(Collectors.joining()).length()
-        ));
-        return answer.isPresent() ? answer.get().getKey() : null;
+        )).map(Map.Entry::getKey).orElse(null);
     }
 
     // Вы крупный поставщик продуктов. Каждая торговая сеть делает вам заказ в виде Map<Товар, Количество>.
     // Необходимо вычислить, какой товар и в каком количестве надо поставить.
-    public static Map<String, Integer> calculateGlobalOrder(final List<Map<String, Integer>> orders) {
+    public static Map<String, Integer> calculateGlobalOrder(@NotNull final List<Map<String, Integer>> orders) {
         return orders.stream().flatMap((m) -> m.entrySet().stream())
                 .collect(Collectors.toMap(Map.Entry::getKey,
                         Map.Entry::getValue,
