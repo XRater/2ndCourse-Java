@@ -1,17 +1,12 @@
 package mit.spbau.kirakosian.sp;
 
-import java.lang.reflect.Constructor;
 import java.util.*;
-import java.util.function.BiConsumer;
-import java.util.function.BinaryOperator;
 import java.util.function.Function;
-import java.util.function.Supplier;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-@SuppressWarnings("WeakerAccess")
+@SuppressWarnings({"WeakerAccess", "unused"})
 public final class FirstPartTasks {
 
     private FirstPartTasks() {}
