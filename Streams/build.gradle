@@ -7,7 +7,8 @@ buildscript {
 	}
 	dependencies {
 		classpath 'org.junit.platform:junit-platform-gradle-plugin:1.0.2'
-	}
+//        classpath 'com.google.guava'
+    }
 }
 
 repositories {
@@ -31,8 +32,8 @@ jar {
 }
 
 compileTestJava {
-	sourceCompatibility = 1.8
-	targetCompatibility = 1.8
+	sourceCompatibility = 1.9
+	targetCompatibility = 1.9
 	options.compilerArgs += '-parameters'
 }
 
@@ -76,21 +77,11 @@ dependencies {
 
     testCompile group: 'org.hamcrest', name: 'hamcrest-junit', version: '2.0.0.0'
     compile group: 'org.jetbrains', name: 'annotations', version: '15.0'
+
+    compile group: 'com.google.guava', name: 'guava', version: '23.5-jre'
 }
 
 task wrapper(type: Wrapper) {
 	description = 'Generates gradlew[.bat] scripts'
 	gradleVersion = '4.3.1'
-}
-
-apply plugin: 'java'
-
-sourceCompatibility = 1.8
-
-repositories {
-    mavenCentral()
-}
-
-dependencies {
-    testCompile group: 'junit', name: 'junit', version: '4.12'
 }
