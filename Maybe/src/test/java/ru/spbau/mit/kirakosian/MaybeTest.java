@@ -1,6 +1,7 @@
+package ru.spbau.mit.kirakosian;
 
-import exceptions.NoElementInMaybeException;
 import org.junit.Test;
+import ru.spbau.mit.kirakosian.exceptions.NoElementInMaybeException;
 
 import static org.junit.jupiter.api.Assertions.*;
 

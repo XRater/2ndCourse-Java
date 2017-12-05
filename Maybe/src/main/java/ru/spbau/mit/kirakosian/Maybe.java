@@ -1,15 +1,20 @@
-import exceptions.NoElementInMaybeException;
+package ru.spbau.mit.kirakosian;
+
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import ru.spbau.mit.kirakosian.exceptions.NoElementInMaybeException;
 
 import java.util.function.Function;
 
 /**
  * The class is supposed to be used when the result of a function may not exists.
  * <p>
- * For example, if you need to find an element in some Collection you may use Maybe as a return value.
- * In that case if the value was found Maybe.just(value) will be returned, otherwise you may return
- * Maybe.nothing(). Using maybe is a much safer way then using null pointers as a return value if
+ * For example, if you need to find an element in some Collection you may use ru.spbau.mit.kirakosian.exceptions
+ * .Maybe as a return value.
+ * In that case if the value was found Maybe.just(value) will be returned,
+ * otherwise you may return
+ * Maybe.nothing(). Using maybe is a much safer way then using null pointers as a
+ * return value if
  * it was not found in Collection.
  *
  * @param <T> type of the stored value.
@@ -75,7 +80,8 @@ public class Maybe<T> {
     /**
      * @param mapper function to apply to the value
      * @param <U>    return type of the given function
-     * @return new Maybe object constructed from the old one by applying mapper to its value
+     * @return new Maybe object constructed from the old one by applying mapper to
+     * its value
      */
     @NotNull
     public <U> Maybe<U> map(

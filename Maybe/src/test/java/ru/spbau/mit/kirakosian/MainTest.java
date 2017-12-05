@@ -1,3 +1,5 @@
+package ru.spbau.mit.kirakosian;
+
 import org.jetbrains.annotations.NotNull;
 import org.junit.Test;
 
@@ -36,19 +38,21 @@ public class MainTest {
     private void createFile(@NotNull final String name, @NotNull final String[] lines) throws IOException {
         final File file = new File(name);
         file.createNewFile();
-        final Writer writer = new FileWriter(name);
-        for (final String line : lines) {
-            writer.write(line);
-            writer.write('\n');
+        try (final Writer writer = new FileWriter(name)) {
+            for (final String line : lines) {
+                writer.write(line);
+                writer.write('\n');
+            }
+            writer.flush();
         }
-        writer.flush();
     }
 
     private void checkFile(@NotNull final String name, @NotNull final String[] data) throws FileNotFoundException {
-        final Scanner scanner = new Scanner(new File(name));
-        for (final String line : data) {
-            assertTrue(scanner.hasNext());
-            assertEquals(line, scanner.nextLine());
+        try (final Scanner scanner = new Scanner(new File(name))) {
+            for (final String line : data) {
+                assertTrue(scanner.hasNext());
+                assertEquals(line, scanner.nextLine());
+            }
         }
     }
 
