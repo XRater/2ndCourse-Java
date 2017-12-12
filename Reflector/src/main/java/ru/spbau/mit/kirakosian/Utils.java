@@ -1,30 +1,17 @@
 package ru.spbau.mit.kirakosian;
 
 import org.jetbrains.annotations.NotNull;
-import org.junit.Before;
-import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-import static org.junit.jupiter.api.Assertions.*;
+public class Utils {
 
-class ReflectorTest {
-
-    private final String sourceDir = "./classes";
-
-    @Test
-    void test() throws IOException {
-
-    }
-
-    private String getFileName(final String name) {
-        return sourceDir + File.separator + name;
-    }
+    public static final String sourceDir = "classes";
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
-    private void createFile(final String name, @NotNull final String... lines) throws IOException {
+    public static File createFile(final String name, @NotNull final String... lines) throws IOException {
         final File file = new File(getFileName(name));
         new File(file.getParent()).mkdirs();
         file.createNewFile();
@@ -34,9 +21,12 @@ class ReflectorTest {
                 writer.append(line).append('\n');
             }
         }
+        String s;
+        return file;
     }
 
-    private void deleteFile(@NotNull final String name) {
+    @SuppressWarnings("ResultOfMethodCallIgnored")
+    public static void deleteFile(@NotNull final String name) {
         final File file = new File(name);
         if (!file.isDirectory()) {
             file.delete();
@@ -46,7 +36,16 @@ class ReflectorTest {
                 deleteFile(inner.getAbsolutePath());
             }
             file.delete();
-//            assertTrue(file.delete());
         }
+    }
+
+    private static String getFileName(final String name) {
+        return sourceDir + File.separator + name;
+    }
+
+    public static File createTemporaryFile(final String proxy) throws IOException {
+        final File file = createFile(proxy);
+        file.deleteOnExit();
+        return file;
     }
 }
