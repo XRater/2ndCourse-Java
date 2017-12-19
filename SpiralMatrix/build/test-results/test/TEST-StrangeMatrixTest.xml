@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="StrangeMatrixTest" tests="4" skipped="0" failures="0" errors="0" timestamp="2017-09-27T21:09:35" hostname="Alexander" time="0.04">
+  <properties/>
+  <testcase name="testSpiralPrintExceptions" classname="StrangeMatrixTest" time="0.015"/>
+  <testcase name="testSortByColumnsExceptions" classname="StrangeMatrixTest" time="0.003"/>
+  <testcase name="testSpiralPrintRegular" classname="StrangeMatrixTest" time="0.008"/>
+  <testcase name="testSortByColumnsRegular" classname="StrangeMatrixTest" time="0.01"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

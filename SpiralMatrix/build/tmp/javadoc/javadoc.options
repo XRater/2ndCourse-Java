@@ -1,0 +1,6 @@
+-classpath '/home/alexander/Documents/AY/2ndCourse/Java/tmp/2ndCourse-Java/SpiralMatrix/build/classes/main:/home/alexander/Documents/AY/2ndCourse/Java/tmp/2ndCourse-Java/SpiralMatrix/build/resources/main'
+-d '/home/alexander/Documents/AY/2ndCourse/Java/tmp/2ndCourse-Java/SpiralMatrix/build/docs/javadoc'
+-doctitle 'SpiralMatrix 1.0-SNAPSHOT API'
+-quiet 
+-windowtitle 'SpiralMatrix 1.0-SNAPSHOT API'
+'/home/alexander/Documents/AY/2ndCourse/Java/tmp/2ndCourse-Java/SpiralMatrix/src/main/java/Hello.java'
