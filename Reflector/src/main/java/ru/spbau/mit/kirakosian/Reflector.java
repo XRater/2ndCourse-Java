@@ -53,7 +53,7 @@ public class Reflector {
     private static void printClass(final Class<?> someClass, final PrintWriter writer, final int shift) {
         classesNames.add(someClass.getSimpleName());
 
-        packageName = someClass.getPackageName();
+        packageName = someClass.getPackage().getName();
 
         printClassName(someClass, writer, shift);
         writer.append('\n');
